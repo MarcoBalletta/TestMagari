@@ -1,0 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
+public class CardHandler : MonoBehaviour, IPointerClickHandler
+{
+    private Card card;
+    private GameMode gameMode;
+
+    public void Setup(Card cardData, GameMode gm)
+    {
+        card = cardData;
+        gameMode = gm;
+        GetComponent<Image>().sprite = card.Image;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        gameMode.GameState.PlayersInGame[gameMode.GameState.PlayerTurn].CardSelected = card;
+        gameMode.pickedCard();
+    }
+}
