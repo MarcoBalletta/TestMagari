@@ -31,14 +31,13 @@ public class Tile : MonoBehaviour
             gm.StateManager.ChangeState(Constants.STATE_PLAYERCHOOSING_ID, gm);
         }else if(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].CardSelected != null && gm.StateManager.Current.Name == Constants.STATE_PICKCARD_ID && gm.GameState.BoardInGame.PositionableTileConditions(data.Row, data.Column))
         {
-            Debug.Log(" check if possibile and spawn card in place");
             gm.GameState.BoardInGame.CheckIfTileCanBeSpawned(data.Row, data.Column, gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].CardSelected);
         }
     }
 
     private void OnMouseEnter()
     {
-        if(gm.StateManager.Current.Name == Constants.STATE_PICKCARD_ID && gm.GameState.BoardInGame.PositionableTileConditions(data.Row, data.Column) && gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].CardSelected != null)
+        if(transform.localScale == Vector3.one && gm.StateManager.Current.Name == Constants.STATE_PICKCARD_ID && gm.GameState.BoardInGame.PositionableTileConditions(data.Row, data.Column) && gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].CardSelected != null)
         {
             transform.localScale *= 0.5f;
             GetComponent<BoxCollider>().size = Vector3.one * 2;
@@ -47,7 +46,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (gm.StateManager.Current.Name == Constants.STATE_PICKCARD_ID && gm.GameState.BoardInGame.PositionableTileConditions(data.Row, data.Column) && gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].CardSelected != null)
+        if (transform.localScale == Vector3.one * 0.5f && gm.StateManager.Current.Name == Constants.STATE_PICKCARD_ID && gm.GameState.BoardInGame.PositionableTileConditions(data.Row, data.Column) && gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].CardSelected != null)
         {
             transform.localScale *= 2f;
             GetComponent<BoxCollider>().size = Vector3.one;
