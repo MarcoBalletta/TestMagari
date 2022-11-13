@@ -153,18 +153,18 @@ public class Board : MonoBehaviour
 
     private void SpawnTileCorridor(int row, int column, Card card)
     {
-        gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].DiscardCard(card);
-        gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].CardSelected = null;
-        //check switch tiles
-        if(mapTiles[new Vector2Int(row,column)].Data.Type == TileType.corridor)
-        {
-            gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].SwapTilesDrawCard(mapTiles[new Vector2Int(row, column)].Data.CardTile);
-        }
         var corridorTile = Instantiate(card.CardObjectPrefab, transform);
         corridorTile.Setup(gm, row, column, TileType.corridor);
         corridorTile.SetupCard(card);
         Vector3 tilePosition = mapTiles[new Vector2Int(row, column)].transform.position;
         Destroy(mapTiles[new Vector2Int(row, column)].gameObject);
+        gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].DiscardCard(card);
+        gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].CardSelected = null;
+        //check switch tiles
+        if (mapTiles[new Vector2Int(row, column)].Data.Type == TileType.corridor)
+        {
+            gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].SwapTilesDrawCard(mapTiles[new Vector2Int(row, column)].Data.CardTile);
+        }
         mapTiles[new Vector2Int(row, column)] = corridorTile;
         corridorTile.transform.position = tilePosition;
     }

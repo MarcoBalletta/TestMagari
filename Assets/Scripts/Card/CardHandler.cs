@@ -18,7 +18,10 @@ public class CardHandler : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        gameMode.GameState.PlayersInGame[gameMode.GameState.PlayerTurn].CardSelected = card;
-        gameMode.pickedCard();
+        if(gameMode.StateManager.Current.Name == Constants.STATE_PICKCARD_ID)
+        {
+            gameMode.GameState.PlayersInGame[gameMode.GameState.PlayerTurn].CardSelected = card;
+            gameMode.pickedCard();
+        }
     }
 }

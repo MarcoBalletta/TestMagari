@@ -57,8 +57,11 @@ public class UIManager : MonoBehaviour
         {
             foreach(var card in cards)
             {
-                var cardImage = Instantiate(cardPrefab, cardsPanel.transform);
-                cardImage.Setup(card, gameMode);
+                if(card != null)
+                {
+                    var cardImage = Instantiate(cardPrefab, cardsPanel.transform);
+                    cardImage.Setup(card, gameMode);
+                }
             }
         }
     }
