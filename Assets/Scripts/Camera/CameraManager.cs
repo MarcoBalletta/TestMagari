@@ -17,6 +17,7 @@ public class CameraManager : MonoBehaviour
         gameMode.pickCard += ShowMainCamera;
         gameMode.pickedCard += ShowTableCamera;
         gameMode.movePlayerToken += ShowTableCamera;
+        gameMode.discardCard += ShowMainCamera;
         enableMainCamera += ShowMainCamera;
         enableTableCamera += ShowTableCamera;
     }

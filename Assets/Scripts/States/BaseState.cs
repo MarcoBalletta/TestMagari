@@ -10,5 +10,5 @@ public class BaseState
     public string Name { get => name; set => name = value; }
 
     public virtual void Enter(GameMode gm) { }
-    public virtual void Exit() { }
+    public virtual void Exit(GameMode gm) { }
 }

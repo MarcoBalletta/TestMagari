@@ -14,9 +14,4 @@ public class PlayerChoosing : BaseState
     {
         gm.playerChooseStartingTile();
     }
-
-    public override void Exit()
-    {
-        
-    }
 }

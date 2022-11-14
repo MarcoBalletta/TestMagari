@@ -8,17 +8,20 @@ public class MoveUnitCommand : BaseCommand
 
     private int row;
     private int column;
-    private GameMode gm;
+    private Board board;
+    private PlayerManager player;
 
-    public MoveUnitCommand(int rowNew, int columnNew, GameMode gameMode)
+    public MoveUnitCommand(int rowNew, int columnNew, PlayerManager playerToMove, Board boardNew)
     {
         row = rowNew;
         column = columnNew;
-        gm = gameMode;
+        player = playerToMove;
+        board = boardNew;
     }
 
     public override void Execute()
     {
-        gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].GetComponent<NavMeshAgent>().SetDestination(gm.GameState.BoardInGame.MapTiles[new Vector2Int(row, column)].transform.position);
+        player.GetComponent<NavMeshAgent>().destination = board.MapTiles[new Vector2Int(row, column)].transform.position;
+        player.playerMoving();
     }
 }

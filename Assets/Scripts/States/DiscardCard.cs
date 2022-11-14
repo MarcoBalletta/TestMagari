@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameStart : BaseState
+public class DiscardCard : BaseState
 {
-    public GameStart()
+    public DiscardCard()
     {
-        Name = Constants.STATE_STARTGAME_ID;
+        Name = Constants.INFO_DISCARD_CARD;
     }
 
     public override void Enter(GameMode gm)
     {
-        gm?.gameStart();
+        gm.discardCard();
     }
 }

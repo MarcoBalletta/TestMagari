@@ -22,8 +22,13 @@ public class GameMode : MonoBehaviour
     public MovePlayerTokenStart movePlayerToken;
     public delegate void PlayerMoved();
     public PlayerMoved playerMoved;
+    public delegate void DiscardCard();
+    public DiscardCard discardCard;
+    public delegate void EndTurn();
+    public EndTurn endTurn;
     public delegate void EndGameStart();
     public EndGameStart endGame;
+
     public GameState GameState { get => gameState; }
     public StateManager StateManager { get => stateManager; }
 
@@ -39,6 +44,7 @@ public class GameMode : MonoBehaviour
         playerChooseStartingTile += CheckForOtherPlayersToSelectStartingTile;
         pickCard += IncreaseTurn;
         gameStart += ChooseStartingPlayer;
+        endTurn += EndTurnPlayer;
     }
 
     private void Start()
@@ -83,6 +89,34 @@ public class GameMode : MonoBehaviour
 
     private void IncreaseTurn()
     {
+        Debug.Log("totalturn");
         gameState.TotalTurns++;
+    }
+
+    private void EndTurnPlayer()
+    {
+        IncreasePlayerturn();
+        stateManager.ChangeState(Constants.STATE_PICKCARD_ID, this);
+    }
+
+    private void IncreasePlayerturn()
+    {
+        Debug.Log("playerturn");
+        gameState.PlayerTurn++;
+        if(gameState.PlayerTurn >= gameState.PlayersInGame.Count)
+        {
+            gameState.PlayerTurn = 0;
+        }
+    }
+
+    public void SkipPhase()
+    {
+        if(stateManager.Current.Name == Constants.STATE_PICKCARD_ID)
+        {
+            stateManager.ChangeState(Constants.STATE_MOVEPLAYERTOKEN_ID, this);
+        }else if(stateManager.Current.Name == Constants.STATE_MOVEPLAYERTOKEN_ID)
+        {
+            playerMoved();
+        }
     }
 }

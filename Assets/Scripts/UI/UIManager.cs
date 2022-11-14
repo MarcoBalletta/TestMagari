@@ -12,15 +12,20 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CardHandler cardPrefab;
     [SerializeField] private TextMeshProUGUI infoText;
     [SerializeField] private TextMeshProUGUI totalTurnsText;
+    [SerializeField] private Button skipPhaseButton;
 
     private void Awake()
     {
         gameMode.playerChooseStartingTile += ChooseStartingTile;
         gameMode.pickCard += TellWhichPlayerTurn;
+        gameMode.pickCard += ShowSkipButton;
         gameMode.pickCard += ShowCardsPanel;
         gameMode.pickedCard += DisableCardsPanel;
         gameMode.movePlayerToken += MoveTokenStartUI;
         gameMode.updateUICards += ShowCardsPanel;
+        gameMode.discardCard += ShowCardsPanel;
+        gameMode.discardCard += HideSkipButton;
+        gameMode.playerMoved += HideSkipButton;
         cameraManager.enableMainCamera += ShowCardsPanel;
         cameraManager.enableTableCamera += DisableCardsPanel;
     }
@@ -70,5 +75,15 @@ public class UIManager : MonoBehaviour
     private void MoveTokenStartUI()
     {
         infoText.text = Constants.INFO_PLAYER_MOVETOKEN + (gameMode.GameState.PlayerTurn + 1).ToString();
+    }
+
+    private void ShowSkipButton()
+    {
+        skipPhaseButton.gameObject.SetActive(true);
+    }    
+    
+    private void HideSkipButton()
+    {
+        skipPhaseButton.gameObject.SetActive(false);
     }
 }

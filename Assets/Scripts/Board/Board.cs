@@ -109,6 +109,7 @@ public class Board : MonoBehaviour
             tileIndex = new Vector2Int(Random.Range(0, gm.GameState.Rows), Random.Range(0, gm.GameState.Columns));
         }
         player.EndingTile = mapTiles[tileIndex];
+        player.EndingTile.Data.Type = TileType.ending;
         return;
     }
 
@@ -190,7 +191,7 @@ public class Board : MonoBehaviour
         corridorTile.transform.position = tilePosition;
     }
 
-    private void BakeArea()
+    public void BakeArea()
     {
         navMesh.BuildNavMesh();
     }
@@ -234,17 +235,27 @@ public class Board : MonoBehaviour
 
     private bool CheckConnectedTilesGivenDirection(Directions dir1, Directions dir2, TileData tile1, TileData tile2)
     {
-        foreach (var direction1FromList in tile1.CardTile.CorridorDirections)
+        if (tile1?.CardTile)
         {
-            if (direction1FromList.HasFlag(Directions.west) && direction1FromList.HasFlag(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].ComingFromDirection))
+            foreach (var direction1FromList in tile1.CardTile.CorridorDirections)
             {
-                foreach (var direction2FromList in tile2.CardTile.CorridorDirections)
+                if (direction1FromList.HasFlag(Directions.west) && direction1FromList.HasFlag(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].ComingFromDirection))
                 {
-                    if (direction2FromList.HasFlag(Directions.east)) return true;
+                    foreach (var direction2FromList in tile2.CardTile.CorridorDirections)
+                    {
+                        if (direction2FromList.HasFlag(Directions.east)) return true;
+                    }
+                    return false;
                 }
-                return false;
             }
+            return false;
         }
-        return false;
+        else return true;
+    }
+
+    public void MoveToken(PlayerManager tokenToMove, TileData tileToMoveTo)
+    {
+        var movement = new MoveUnitCommand(tileToMoveTo.Row, tileToMoveTo.Column, tokenToMove, this);
+        movement.Execute();
     }
 }

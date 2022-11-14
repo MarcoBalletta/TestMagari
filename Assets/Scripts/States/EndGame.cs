@@ -13,9 +13,4 @@ public class EndGame : BaseState
     {
         gm.endGame();
     }
-
-    public override void Exit()
-    {
-
-    }
 }

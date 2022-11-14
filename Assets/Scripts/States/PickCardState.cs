@@ -13,9 +13,4 @@ public class PickCardState : BaseState
     {
         gm.pickCard();
     }
-
-    public override void Exit()
-    {
-
-    }
 }

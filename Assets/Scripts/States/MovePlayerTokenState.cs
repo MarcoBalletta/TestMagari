@@ -13,9 +13,4 @@ public class MovePlayerTokenState : BaseState
     {
         gm.movePlayerToken();
     }
-
-    public override void Exit()
-    {
-
-    }
 }

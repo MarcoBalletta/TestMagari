@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using System.Linq;
 
 public class PlayerManager : MonoBehaviour
@@ -15,10 +16,13 @@ public class PlayerManager : MonoBehaviour
     private Board board;
     private Card[] playerCards;
     private Card cardSelected;
+    private NavMeshAgent agent;
     [SerializeField] private Tile prefabStartingTile;
     [SerializeField] private Tile prefabEndingTile;
     [SerializeField] private GameObject model;
     [SerializeField] private Animator anim;
+    public delegate void PlayerMoving();
+    public PlayerMoving playerMoving;
 
     public void Init(int indexList, GameMode gameMode, Board boardToPass)
     {
@@ -27,6 +31,11 @@ public class PlayerManager : MonoBehaviour
         gm.gameStart += SpawnStartingEndingTiles;
         gm.gameStart += ShowModel;
         board = boardToPass;
+        agent = GetComponent<NavMeshAgent>();
+        playerMoving += CheckIfArrivedAtDestination;
+        playerMoving += StartRunning;
+        gm.playerMoved += StopRunning;
+        gm.playerMoved += CheckNumberOfCards;
     }
 
     private void SpawnStartingEndingTiles()
@@ -49,6 +58,7 @@ public class PlayerManager : MonoBehaviour
         Destroy(endingTile.gameObject);
         endingTile = ending;
         board.MapTiles[new Vector2Int(ending.Data.Row, ending.Data.Column)] = ending;
+        board.BakeArea();
     }
 
     private void ShowModel()
@@ -74,7 +84,46 @@ public class PlayerManager : MonoBehaviour
         var index = Array.IndexOf(playerCards, cardDiscarded);
         if (index == -1) return;
         playerCards[index] = null;
-        gm.updateUICards();
+        if(gm.StateManager.Current.Name == Constants.STATE_DISCARDCARD_ID)  gm.StateManager.ChangeState(Constants.STATE_ENDTURN_ID, gm);
+    }
+
+    private void StartRunning()
+    {
+        anim.SetBool(Constants.ANIM_MOVING_PARAMETER, true);
+    }
+
+    private void CheckIfArrivedAtDestination()
+    {
+        StartCoroutine(ControlIfArrived());
+    }
+
+    private IEnumerator ControlIfArrived()
+    {
+        yield return new WaitForSeconds(0.2f);
+        while (agent.velocity.magnitude > 0f && Vector3.Distance(transform.position, agent.destination) > agent.stoppingDistance)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        Debug.Log("Done");
+        gm.playerMoved();
+    }
+    
+    private void StopRunning()
+    {
+        anim.SetBool(Constants.ANIM_MOVING_PARAMETER, false);
+    }
+
+    private void CheckNumberOfCards()
+    {
+        var arrayCards = playerCards.Where(card => card != null);
+        if(arrayCards.Count() > Constants.MAX_NUMBER_OF_CARDS)
+        {
+            gm.StateManager.ChangeState(Constants.STATE_DISCARDCARD_ID, gm);
+        }
+        else
+        {
+            gm.StateManager.ChangeState(Constants.STATE_ENDTURN_ID, gm);
+        }
     }
 
     public int IndexTurn { get => indexTurn; set => indexTurn = value; }

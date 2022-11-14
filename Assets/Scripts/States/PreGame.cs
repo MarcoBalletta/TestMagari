@@ -14,9 +14,4 @@ public class PreGame : BaseState
     {
         gm?.preGame();
     }
-
-    public override void Exit()
-    {
-        
-    }
 }

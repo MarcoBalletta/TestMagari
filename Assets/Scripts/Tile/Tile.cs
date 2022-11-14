@@ -36,13 +36,13 @@ public class Tile : MonoBehaviour
             board.CheckIfTileCanBeSpawned(data.Row, data.Column, gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].CardSelected);
         }else if (CheckMoveTokenConditions())
         {
-
+            board.MoveToken(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn], data);
         }
     }
 
     private void OnMouseEnter()
     {
-        if(transform.localScale == Vector3.one && (CheckPickCardConditions() || CheckMoveTokenConditions()))
+        if(transform.localScale == Vector3.one && (CheckPickCardConditions()))// || CheckMoveTokenConditions()))
         {
             transform.localScale *= 0.5f;
             GetComponent<BoxCollider>().size = Vector3.one * 2;
@@ -51,7 +51,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (transform.localScale == Vector3.one * 0.5f && (CheckPickCardConditions() || CheckMoveTokenConditions()))
+        if (transform.localScale == Vector3.one * 0.5f && (CheckPickCardConditions()))// || CheckMoveTokenConditions()))
         {
             transform.localScale *= 2f;
             GetComponent<BoxCollider>().size = Vector3.one;

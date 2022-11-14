@@ -22,6 +22,9 @@ public class CardHandler : MonoBehaviour, IPointerClickHandler
         {
             gameMode.GameState.PlayersInGame[gameMode.GameState.PlayerTurn].CardSelected = card;
             gameMode.pickedCard();
+        }else if(gameMode.StateManager.Current.Name == Constants.INFO_DISCARD_CARD)
+        {
+            gameMode.GameState.PlayersInGame[gameMode.GameState.PlayerTurn].DiscardCard(card);
         }
     }
 }
