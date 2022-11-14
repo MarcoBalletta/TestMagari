@@ -1042,6 +1042,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5020073584042657087}
   - component: {fileID: 5020073584042657084}
+  - component: {fileID: -8922749160066778492}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -1081,6 +1082,28 @@ MonoBehaviour:
   prefabEndingTile: {fileID: 3271078374975297727, guid: f7ad0f1d423c8524e888cc02ae384cdd, type: 3}
   model: {fileID: 4022507233968482361}
   anim: {fileID: 5417287563409823439}
+--- !u!195 &-8922749160066778492
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5020073584042657086}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.1
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.75
+  m_BaseOffset: -0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &5188843147125962628
 GameObject:
   m_ObjectHideFlags: 0

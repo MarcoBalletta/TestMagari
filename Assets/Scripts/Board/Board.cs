@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.AI.Navigation;
 
 public class Board : MonoBehaviour
 {
     private GameMode gm;
     private Grid grid;
     private Dictionary<Vector2Int, Tile> mapTiles = new Dictionary<Vector2Int, Tile>();
+    private NavMeshSurface navMesh;
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private List<Card> listOfPossibleCards = new List<Card>();
     [SerializeField] private List<Card> deckOfCards = new List<Card>();
@@ -19,9 +21,11 @@ public class Board : MonoBehaviour
         gm = gameMode;
         grid = GetComponent<Grid>();
         CreateGrid();
+        navMesh = GetComponent<NavMeshSurface>();
         gm.preGame += PopulateDeck;
         gm.gameStart += GiveCardsToPlayers;
         gm.pickCard += PlayerDrawCard;
+        gm.movePlayerToken += BakeArea;
     }
 
     private void CreateGrid()
@@ -150,23 +154,10 @@ public class Board : MonoBehaviour
                 {
                     if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && CheckDirection(row, column - 1, Directions.east)) return;
                 }
-                //switch (direction)
-                //{
-                //    case Directions.north:
-                        
-                //        break;
-                //    case Directions.south:
-                //                                break;
-                //    case Directions.east:
-                //                                break;
-                //    case Directions.west:
-                       
-                //        break;
-                //}
             }
             //can spawn tile
             SpawnTileCorridor(row, column, card);
-            //gm.StateManager.ChangeState(Constants.STATE_MOVEPLAYERTOKEN_ID, gm);
+            gm.StateManager.ChangeState(Constants.STATE_MOVEPLAYERTOKEN_ID, gm);
         }
     }
 
@@ -201,5 +192,10 @@ public class Board : MonoBehaviour
         }
         mapTiles[new Vector2Int(row, column)] = corridorTile;
         corridorTile.transform.position = tilePosition;
+    }
+
+    private void BakeArea()
+    {
+        navMesh.BuildNavMesh();
     }
 }

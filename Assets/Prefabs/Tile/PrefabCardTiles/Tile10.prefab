@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 11275019882337886}
   - component: {fileID: -767320473438799902}
-  m_Layer: 0
+  - component: {fileID: -4150594332587223577}
+  m_Layer: 6
   m_Name: Tile10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,6 +46,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3629730d2468434f9f14136b33210e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &-4150594332587223577
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11275019882337887}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &11275019907245780
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +73,7 @@ GameObject:
   - component: {fileID: 11275019907245784}
   - component: {fileID: 11275019907245785}
   - component: {fileID: 11275019907245782}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall  (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -585,7 +599,7 @@ GameObject:
   - component: {fileID: 11275020312744957}
   - component: {fileID: 11275020312744954}
   - component: {fileID: 11275020312744955}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall  (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1111,7 +1125,7 @@ GameObject:
   - component: {fileID: 11275020783726784}
   - component: {fileID: 11275020783726785}
   - component: {fileID: 11275020783726814}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2006,7 +2020,7 @@ GameObject:
   - component: {fileID: 11275021169905923}
   - component: {fileID: 11275021169905920}
   - component: {fileID: 11275021169905921}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall  (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2532,7 +2546,7 @@ GameObject:
   - component: {fileID: 11275021417151877}
   - component: {fileID: 11275021417151874}
   - component: {fileID: 11275021417151875}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall  (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3054,6 +3068,10 @@ PrefabInstance:
     - target: {fileID: 4624870421590139188, guid: ee32b13053550754c9f743cddf810d07, type: 3}
       propertyPath: m_Name
       value: BasicRoadPlane
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624870421590139188, guid: ee32b13053550754c9f743cddf810d07, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5163895098614334750, guid: ee32b13053550754c9f743cddf810d07, type: 3}
       propertyPath: m_Mesh

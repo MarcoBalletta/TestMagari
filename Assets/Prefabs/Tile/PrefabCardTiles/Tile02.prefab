@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 493429557919471985}
   - component: {fileID: 493429557919471998}
   - component: {fileID: 493429557919471999}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,7 +354,8 @@ GameObject:
   m_Component:
   - component: {fileID: 493429557925907844}
   - component: {fileID: 5245765008493907038}
-  m_Layer: 0
+  - component: {fileID: -4970151158114445383}
+  m_Layer: 6
   m_Name: Tile02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,6 +390,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3629730d2468434f9f14136b33210e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &-4970151158114445383
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493429557925907845}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &493429558106779579
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +417,7 @@ GameObject:
   - component: {fileID: 493429558106779583}
   - component: {fileID: 493429558106779580}
   - component: {fileID: 493429558106779581}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -747,7 +761,7 @@ GameObject:
   - component: {fileID: 493429558986705463}
   - component: {fileID: 493429558986705460}
   - component: {fileID: 493429558986705461}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1087,6 +1101,10 @@ PrefabInstance:
     - target: {fileID: 4624870421590139188, guid: ee32b13053550754c9f743cddf810d07, type: 3}
       propertyPath: m_Name
       value: BasicRoadPlane
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624870421590139188, guid: ee32b13053550754c9f743cddf810d07, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5163895098614334750, guid: ee32b13053550754c9f743cddf810d07, type: 3}
       propertyPath: m_Mesh
