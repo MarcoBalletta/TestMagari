@@ -14,7 +14,8 @@ public static class Constants
     #endregion
     #region UI
     public static string INFO_SELECT_STARTING_POINT = "Please select starting point player ";
-    public static string INFO_PLAYER_PLAYING = "Turn player ";
+    public static string INFO_PLAYER_PICKCARD = "Choose a card to place, player ";
+    public static string INFO_PLAYER_MOVETOKEN = "Move your token, player ";
     public static string INFO_DISCARD_CARD = "Please discard a card";
     #endregion
     #region PlayerStats

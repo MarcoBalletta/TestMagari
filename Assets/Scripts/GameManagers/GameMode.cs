@@ -20,6 +20,8 @@ public class GameMode : MonoBehaviour
     public PickedCardStart updateUICards;
     public delegate void MovePlayerTokenStart();
     public MovePlayerTokenStart movePlayerToken;
+    public delegate void PlayerMoved();
+    public PlayerMoved playerMoved;
     public delegate void EndGameStart();
     public EndGameStart endGame;
     public GameState GameState { get => gameState; }

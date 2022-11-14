@@ -120,7 +120,6 @@ public class Board : MonoBehaviour
             {
                 if (direction.HasFlag(Directions.north))
                 {
-                    Debug.Log("north");
                     if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && !CheckDirection(row - 1, column, Directions.south)) return;
                 }
                 else
@@ -129,7 +128,6 @@ public class Board : MonoBehaviour
                 }
                 if (direction.HasFlag(Directions.south))
                 {
-                    Debug.Log("south");
                     if (row + 1 < gm.GameState.Rows && mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.corridor && !CheckDirection(row + 1, column, Directions.north)) return;
                 }
                 else
@@ -138,7 +136,6 @@ public class Board : MonoBehaviour
                 }
                 if (direction.HasFlag(Directions.east))
                 {
-                    Debug.Log("east");
                     if (column + 1 < gm.GameState.Columns && mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.corridor && !CheckDirection(row, column + 1, Directions.west)) return;
                 }
                 else
@@ -147,7 +144,6 @@ public class Board : MonoBehaviour
                 }
                 if (direction.HasFlag(Directions.west))
                 {
-                    Debug.Log("west");
                     if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && !CheckDirection(row, column - 1, Directions.east)) return;
                 }
                 else
@@ -197,5 +193,58 @@ public class Board : MonoBehaviour
     private void BakeArea()
     {
         navMesh.BuildNavMesh();
+    }
+
+    public bool CheckTilesConnected(TileData tile1, TileData tile2)
+    {
+        var direction = GetMovementDirection(tile1, tile2);
+        switch (direction)
+        {
+            case Directions.north:
+                return CheckConnectedTilesGivenDirection(Directions.north, Directions.south, tile1, tile2);
+            case Directions.south:
+                return CheckConnectedTilesGivenDirection(Directions.south, Directions.north, tile1, tile2);
+            case Directions.west:
+                return CheckConnectedTilesGivenDirection(Directions.west, Directions.east, tile1, tile2);               
+            case Directions.east:
+                return CheckConnectedTilesGivenDirection(Directions.east, Directions.west, tile1, tile2);
+            default:
+                return true;
+        }
+    }
+
+    public Directions GetMovementDirection(TileData tile1, TileData tile2)
+    {
+        if(tile1.Row == tile2.Row)
+        {
+            if (tile1.Column - tile2.Column == 1)
+            {
+                return Directions.south;
+            }
+            else return Directions.north;
+        }else
+        {
+            if (tile1.Row - tile2.Row == 1)
+            {
+                return Directions.west;
+            }
+            else return Directions.east;
+        }
+    }
+
+    private bool CheckConnectedTilesGivenDirection(Directions dir1, Directions dir2, TileData tile1, TileData tile2)
+    {
+        foreach (var direction1FromList in tile1.CardTile.CorridorDirections)
+        {
+            if (direction1FromList.HasFlag(Directions.west) && direction1FromList.HasFlag(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].ComingFromDirection))
+            {
+                foreach (var direction2FromList in tile2.CardTile.CorridorDirections)
+                {
+                    if (direction2FromList.HasFlag(Directions.east)) return true;
+                }
+                return false;
+            }
+        }
+        return false;
     }
 }

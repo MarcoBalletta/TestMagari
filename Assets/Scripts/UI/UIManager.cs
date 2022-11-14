@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
         gameMode.pickCard += TellWhichPlayerTurn;
         gameMode.pickCard += ShowCardsPanel;
         gameMode.pickedCard += DisableCardsPanel;
+        gameMode.movePlayerToken += MoveTokenStartUI;
         gameMode.updateUICards += ShowCardsPanel;
         cameraManager.enableMainCamera += ShowCardsPanel;
         cameraManager.enableTableCamera += DisableCardsPanel;
@@ -32,7 +33,7 @@ public class UIManager : MonoBehaviour
 
     private void TellWhichPlayerTurn()
     {
-        infoText.text = Constants.INFO_PLAYER_PLAYING + (gameMode.GameState.PlayerTurn + 1).ToString();
+        infoText.text = Constants.INFO_PLAYER_PICKCARD + (gameMode.GameState.PlayerTurn + 1).ToString();
         totalTurnsText.text = gameMode.GameState.TotalTurns.ToString();
     }
 
@@ -64,5 +65,10 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void MoveTokenStartUI()
+    {
+        infoText.text = Constants.INFO_PLAYER_MOVETOKEN + (gameMode.GameState.PlayerTurn + 1).ToString();
     }
 }

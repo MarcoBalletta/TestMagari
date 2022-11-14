@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     private Tile startingTile;
     private Tile endingTile;
     private Tile actualTile;
+    private Directions comingFromDirection = Directions.none;
     private GameMode gm;
     private Board board;
     private Card[] playerCards;
@@ -36,6 +37,8 @@ public class PlayerManager : MonoBehaviour
         starting.transform.position = startingTile.transform.position;
         Destroy(startingTile.gameObject);
         startingTile = starting;
+        startingTile.PlayerOnTile = this;
+        actualTile = startingTile;
         board.MapTiles[new Vector2Int(startingTile.Data.Row, startingTile.Data.Column)] = startingTile;
         transform.position = startingTile.transform.position;
 
@@ -80,4 +83,5 @@ public class PlayerManager : MonoBehaviour
     public Card[] PlayerCards { get => playerCards; set => playerCards = value; }
     public Tile ActualTile { get => actualTile; set => actualTile = value; }
     public Card CardSelected { get => cardSelected; set => cardSelected = value; }
+    public Directions ComingFromDirection { get => comingFromDirection; set => comingFromDirection = value; }
 }
