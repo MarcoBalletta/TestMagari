@@ -17,11 +17,12 @@ public class PlayerManager : MonoBehaviour
     private Card[] playerCards;
     private Card cardSelected;
     private NavMeshAgent agent;
+    private Coroutine movementCoroutine;
     [SerializeField] private Tile prefabStartingTile;
     [SerializeField] private Tile prefabEndingTile;
     [SerializeField] private GameObject model;
     [SerializeField] private Animator anim;
-    public delegate void PlayerMoving();
+    public delegate void PlayerMoving(Tile data);
     public PlayerMoving playerMoving;
 
     public void Init(int indexList, GameMode gameMode, Board boardToPass)
@@ -35,7 +36,7 @@ public class PlayerManager : MonoBehaviour
         playerMoving += CheckIfArrivedAtDestination;
         playerMoving += StartRunning;
         gm.playerMoved += StopRunning;
-        gm.playerMoved += CheckNumberOfCards;
+        //gm.playerMoved += CheckNumberOfCards;
     }
 
     private void SpawnStartingEndingTiles()
@@ -87,24 +88,29 @@ public class PlayerManager : MonoBehaviour
         if(gm.StateManager.Current.Name == Constants.STATE_DISCARDCARD_ID)  gm.StateManager.ChangeState(Constants.STATE_ENDTURN_ID, gm);
     }
 
-    private void StartRunning()
+    private void StartRunning(Tile data)
     {
         anim.SetBool(Constants.ANIM_MOVING_PARAMETER, true);
     }
 
-    private void CheckIfArrivedAtDestination()
+    private void CheckIfArrivedAtDestination(Tile data)
     {
-        StartCoroutine(ControlIfArrived());
+        if(movementCoroutine == null) movementCoroutine = StartCoroutine(ControlIfArrived(data));
     }
 
-    private IEnumerator ControlIfArrived()
+    private IEnumerator ControlIfArrived(Tile data)
     {
         yield return new WaitForSeconds(0.2f);
-        while (agent.velocity.magnitude > 0f && Vector3.Distance(transform.position, agent.destination) > agent.stoppingDistance)
+        while (movementCoroutine != null && agent.pathPending && Vector3.Distance(transform.position, agent.destination) > agent.stoppingDistance)
         {
             yield return new WaitForSeconds(0.1f);
         }
-        Debug.Log("Done");
+        StopCoroutine(movementCoroutine);
+        movementCoroutine = null;
+        actualTile.PlayerOnTile = null;
+        actualTile = data;
+        data.PlayerOnTile = this;
+        if (actualTile == endingTile) gm.StateManager.ChangeState(Constants.STATE_ENDGAME_ID, gm);
         gm.playerMoved();
     }
     
@@ -113,9 +119,11 @@ public class PlayerManager : MonoBehaviour
         anim.SetBool(Constants.ANIM_MOVING_PARAMETER, false);
     }
 
-    private void CheckNumberOfCards()
+    public void CheckNumberOfCards()
     {
+        //if (indexTurn != gm.GameState.PlayerTurn) return;
         var arrayCards = playerCards.Where(card => card != null);
+        Debug.Log("count: " + arrayCards.Count());
         if(arrayCards.Count() > Constants.MAX_NUMBER_OF_CARDS)
         {
             gm.StateManager.ChangeState(Constants.STATE_DISCARDCARD_ID, gm);

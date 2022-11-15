@@ -29,6 +29,10 @@ public class GameMode : MonoBehaviour
     public delegate void EndGameStart();
     public EndGameStart endGame;
 
+    public delegate void EnableMainCamera();
+    public EnableMainCamera enableMainCamera;
+    public delegate void EnableTableCamera();
+    public EnableTableCamera enableTableCamera;
     public GameState GameState { get => gameState; }
     public StateManager StateManager { get => stateManager; }
 
@@ -43,6 +47,7 @@ public class GameMode : MonoBehaviour
         preGame += CreatePlayers;
         playerChooseStartingTile += CheckForOtherPlayersToSelectStartingTile;
         pickCard += IncreaseTurn;
+        playerMoved += ControlPlayersCards;
         gameStart += ChooseStartingPlayer;
         endTurn += EndTurnPlayer;
     }
@@ -89,7 +94,6 @@ public class GameMode : MonoBehaviour
 
     private void IncreaseTurn()
     {
-        Debug.Log("totalturn");
         gameState.TotalTurns++;
     }
 
@@ -101,7 +105,6 @@ public class GameMode : MonoBehaviour
 
     private void IncreasePlayerturn()
     {
-        Debug.Log("playerturn");
         gameState.PlayerTurn++;
         if(gameState.PlayerTurn >= gameState.PlayersInGame.Count)
         {
@@ -118,5 +121,10 @@ public class GameMode : MonoBehaviour
         {
             playerMoved();
         }
+    }
+
+    private void ControlPlayersCards()
+    {
+        gameState.PlayersInGame[gameState.PlayerTurn].CheckNumberOfCards();
     }
 }

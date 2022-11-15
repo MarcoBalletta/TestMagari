@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameMode gameMode;
-    [SerializeField] private CameraManager cameraManager;
     [SerializeField] private GameObject cardsPanel;
     [SerializeField] private CardHandler cardPrefab;
     [SerializeField] private TextMeshProUGUI infoText;
@@ -17,17 +16,21 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         gameMode.playerChooseStartingTile += ChooseStartingTile;
+        //gameMode.playerChooseStartingTile += HideSkipButton;
         gameMode.pickCard += TellWhichPlayerTurn;
         gameMode.pickCard += ShowSkipButton;
         gameMode.pickCard += ShowCardsPanel;
         gameMode.pickedCard += DisableCardsPanel;
         gameMode.movePlayerToken += MoveTokenStartUI;
+        gameMode.movePlayerToken += DisableCardsPanel;
+        gameMode.movePlayerToken += ShowSkipButton;
         gameMode.updateUICards += ShowCardsPanel;
         gameMode.discardCard += ShowCardsPanel;
+        gameMode.discardCard += DiscardCardStartUI;
         gameMode.discardCard += HideSkipButton;
         gameMode.playerMoved += HideSkipButton;
-        cameraManager.enableMainCamera += ShowCardsPanel;
-        cameraManager.enableTableCamera += DisableCardsPanel;
+        gameMode.enableMainCamera += ShowCardsPanel;
+        gameMode.enableTableCamera += DisableCardsPanel;
     }
 
     private void ChooseStartingTile()
@@ -75,6 +78,11 @@ public class UIManager : MonoBehaviour
     private void MoveTokenStartUI()
     {
         infoText.text = Constants.INFO_PLAYER_MOVETOKEN + (gameMode.GameState.PlayerTurn + 1).ToString();
+    }    
+    
+    private void DiscardCardStartUI()
+    {
+        infoText.text = Constants.INFO_DISCARD_CARD + (gameMode.GameState.PlayerTurn + 1).ToString();
     }
 
     private void ShowSkipButton()

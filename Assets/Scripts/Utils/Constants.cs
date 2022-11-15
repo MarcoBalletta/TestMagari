@@ -18,7 +18,7 @@ public static class Constants
     public static string INFO_SELECT_STARTING_POINT = "Please select starting point player ";
     public static string INFO_PLAYER_PICKCARD = "Choose a card to place, player ";
     public static string INFO_PLAYER_MOVETOKEN = "Move your token, player ";
-    public static string INFO_DISCARD_CARD = "Please discard a card";
+    public static string INFO_DISCARD_CARD = "Discard a card, player ";
     #endregion
     #region PlayerStats
     public static int MAX_NUMBER_OF_CARDS = 5;

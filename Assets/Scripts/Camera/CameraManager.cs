@@ -7,10 +7,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Camera onlyTableCamera;
     [SerializeField] private GameMode gameMode;
-    public delegate void EnableMainCamera();
-    public EnableMainCamera enableMainCamera;
-    public delegate void EnableTableCamera();
-    public EnableMainCamera enableTableCamera;
+
 
     private void Start()
     {
@@ -18,8 +15,8 @@ public class CameraManager : MonoBehaviour
         gameMode.pickedCard += ShowTableCamera;
         gameMode.movePlayerToken += ShowTableCamera;
         gameMode.discardCard += ShowMainCamera;
-        enableMainCamera += ShowMainCamera;
-        enableTableCamera += ShowTableCamera;
+        gameMode.enableMainCamera += ShowMainCamera;
+        gameMode.enableTableCamera += ShowTableCamera;
     }
 
 
@@ -27,11 +24,11 @@ public class CameraManager : MonoBehaviour
     {
         if (mainCamera.isActiveAndEnabled)
         {
-            enableTableCamera();
+            gameMode.enableTableCamera();
         }
         else
         {
-            enableMainCamera();
+            gameMode.enableMainCamera();
         }
     }
 

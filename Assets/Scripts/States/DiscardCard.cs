@@ -6,7 +6,7 @@ public class DiscardCard : BaseState
 {
     public DiscardCard()
     {
-        Name = Constants.INFO_DISCARD_CARD;
+        Name = Constants.STATE_DISCARDCARD_ID;
     }
 
     public override void Enter(GameMode gm)

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd4d6d8a13fe124fb7eb10959224257, type: 3}
+  m_Name: Tile13
+  m_EditorClassIdentifier: 
+  corridorDirections: 0a0000000400000001000000
+  type: 0
+  image: {fileID: 21300000, guid: def0ed22e079e7347a9c97e7a6cb0074, type: 3}
+  cardObjectPrefab: {fileID: 1999678988814840554, guid: a27b8fdc2f6620847bc80c6a68a24834, type: 3}
+  numberInTheDeck: 5

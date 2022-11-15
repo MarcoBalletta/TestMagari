@@ -189,6 +189,7 @@ public class Board : MonoBehaviour
         }
         mapTiles[new Vector2Int(row, column)] = corridorTile;
         corridorTile.transform.position = tilePosition;
+        //gm.enableTableCamera();
     }
 
     public void BakeArea()
@@ -199,6 +200,7 @@ public class Board : MonoBehaviour
     public bool CheckTilesConnected(TileData tile1, TileData tile2)
     {
         var direction = GetMovementDirection(tile1, tile2);
+        Debug.Log(direction);
         switch (direction)
         {
             case Directions.north:
@@ -220,16 +222,16 @@ public class Board : MonoBehaviour
         {
             if (tile1.Column - tile2.Column == 1)
             {
-                return Directions.south;
+                return Directions.west;
             }
-            else return Directions.north;
+            else return Directions.east;
         }else
         {
             if (tile1.Row - tile2.Row == 1)
             {
-                return Directions.west;
+                return Directions.north;
             }
-            else return Directions.east;
+            else return Directions.south;
         }
     }
 
@@ -239,13 +241,17 @@ public class Board : MonoBehaviour
         {
             foreach (var direction1FromList in tile1.CardTile.CorridorDirections)
             {
-                if (direction1FromList.HasFlag(Directions.west) && direction1FromList.HasFlag(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].ComingFromDirection))
+                if (direction1FromList.HasFlag(dir1) && direction1FromList.HasFlag(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].ComingFromDirection))
                 {
-                    foreach (var direction2FromList in tile2.CardTile.CorridorDirections)
+                    if (tile2?.CardTile)
                     {
-                        if (direction2FromList.HasFlag(Directions.east)) return true;
+                        foreach (var direction2FromList in tile2.CardTile.CorridorDirections)
+                        {
+                            if (direction2FromList.HasFlag(dir2)) return true;
+                        }
+                        return false;
                     }
-                    return false;
+                    else return true;
                 }
             }
             return false;
@@ -255,7 +261,8 @@ public class Board : MonoBehaviour
 
     public void MoveToken(PlayerManager tokenToMove, TileData tileToMoveTo)
     {
-        var movement = new MoveUnitCommand(tileToMoveTo.Row, tileToMoveTo.Column, tokenToMove, this);
+        var direction = GetMovementDirection(tokenToMove.ActualTile.Data, tileToMoveTo);
+        var movement = new MoveUnitCommand(tileToMoveTo.Row, tileToMoveTo.Column, tokenToMove, this, direction);
         movement.Execute();
     }
 }

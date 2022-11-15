@@ -22,7 +22,7 @@ public class CardHandler : MonoBehaviour, IPointerClickHandler
         {
             gameMode.GameState.PlayersInGame[gameMode.GameState.PlayerTurn].CardSelected = card;
             gameMode.pickedCard();
-        }else if(gameMode.StateManager.Current.Name == Constants.INFO_DISCARD_CARD)
+        }else if(gameMode.StateManager.Current.Name == Constants.STATE_DISCARDCARD_ID)
         {
             gameMode.GameState.PlayersInGame[gameMode.GameState.PlayerTurn].DiscardCard(card);
         }
