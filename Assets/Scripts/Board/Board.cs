@@ -41,7 +41,7 @@ public class Board : MonoBehaviour
                 tile.transform.SetParent(this.transform);
                 tile.transform.localScale = grid.cellSize;
                 x -= 1 * (grid.cellSize.x + grid.cellGap.x);
-                tile.Setup(gm, row, column, TileType.empty);
+                tile.Setup(gm, row, column, TileType.empty, false);
                 mapTiles[new Vector2Int(row, column)] = tile;
             }
             x = startPosition.x;
@@ -176,7 +176,7 @@ public class Board : MonoBehaviour
     private void SpawnTileCorridor(int row, int column, Card card)
     {
         var corridorTile = Instantiate(card.CardObjectPrefab, transform);
-        corridorTile.Setup(gm, row, column, TileType.corridor);
+        corridorTile.Setup(gm, row, column, TileType.corridor, DecideIfTrap());
         corridorTile.SetupCard(card);
         Vector3 tilePosition = mapTiles[new Vector2Int(row, column)].transform.position;
         Destroy(mapTiles[new Vector2Int(row, column)].gameObject);
@@ -190,6 +190,13 @@ public class Board : MonoBehaviour
         mapTiles[new Vector2Int(row, column)] = corridorTile;
         corridorTile.transform.position = tilePosition;
         //gm.enableTableCamera();
+    }
+
+    private bool DecideIfTrap()
+    {
+        var percentage = Random.Range(0, 100);
+        if (percentage < Constants.PERCENTAGE_IF_TRAP)  return true;
+        else return false;
     }
 
     public void BakeArea()

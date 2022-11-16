@@ -12,11 +12,11 @@ public class Tile : MonoBehaviour
     public TileData Data { get => data; }
     public PlayerManager PlayerOnTile { get => playerOnTile; set => playerOnTile = value; }
 
-    public void Setup(GameMode gameMode, int rowNew, int columnNew, TileType newType)
+    public void Setup(GameMode gameMode, int rowNew, int columnNew, TileType newType, bool trap)
     {
         gm = gameMode;
         board = gm.GameState.BoardInGame;
-        data = new TileData(rowNew, columnNew, newType);
+        data = new TileData(rowNew, columnNew, newType, trap);
     }
 
     public void SetupCard(Card newCard)
@@ -26,17 +26,24 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].StartingTile == null && gm.StateManager.Current.Name == Constants.STATE_PLAYERCHOOSING_ID && data.Type == TileType.empty)
+        var playerPlaying = gm.GameState.PlayersInGame[gm.GameState.PlayerTurn];
+        if (playerPlaying.StartingTile == null && gm.StateManager.Current.Name == Constants.STATE_PLAYERCHOOSING_ID && data.Type == TileType.empty)
         {
-            gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].StartingTile = this;
+            playerPlaying.StartingTile = this;
             data.Type = TileType.starting;
             gm.StateManager.ChangeState(Constants.STATE_PLAYERCHOOSING_ID, gm);
         }else if(CheckPickCardConditions())
         {
-            board.CheckIfTileCanBeSpawned(data.Row, data.Column, gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].CardSelected);
+            board.CheckIfTileCanBeSpawned(data.Row, data.Column, playerPlaying.CardSelected);
         }else if (CheckMoveTokenConditions())
         {
-            board.MoveToken(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn], data);
+            if(playerOnTile != null)
+            {
+                var dataTilePlayer = playerPlaying.ActualTile.data;
+                board.MoveToken(playerOnTile, dataTilePlayer);
+            }
+            board.MoveToken(playerPlaying, data);
+            
         }
     }
 

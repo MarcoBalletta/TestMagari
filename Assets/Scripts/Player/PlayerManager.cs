@@ -43,7 +43,7 @@ public class PlayerManager : MonoBehaviour
     {
         //spawn starting tile and adjust data
         var starting = Instantiate(prefabStartingTile, board.transform);
-        starting.Setup(gm, startingTile.Data.Row, startingTile.Data.Column, TileType.starting);
+        starting.Setup(gm, startingTile.Data.Row, startingTile.Data.Column, TileType.starting, false);
         starting.transform.position = startingTile.transform.position;
         Destroy(startingTile.gameObject);
         startingTile = starting;
@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
 
         //spawn ending tile and adjust data
         var ending = Instantiate(prefabEndingTile, board.transform);
-        ending.Setup(gm, endingTile.Data.Row, endingTile.Data.Column, TileType.ending);
+        ending.Setup(gm, endingTile.Data.Row, endingTile.Data.Column, TileType.ending, false);
         ending.transform.position = endingTile.transform.position;
         Destroy(endingTile.gameObject);
         endingTile = ending;
