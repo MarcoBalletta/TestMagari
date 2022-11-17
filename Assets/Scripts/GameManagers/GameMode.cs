@@ -48,9 +48,10 @@ public class GameMode : MonoBehaviour
         board.Init(this);
         preGame += CreatePlayers;
         playerChooseStartingTile += CheckForOtherPlayersToSelectStartingTile;
+        playerChooseStartingTile += ResetCardsPlayed;
+        playerChooseStartingTile += ResetSteps;
         pickCard += IncreaseTurn;
         playerMoved += ControlPlayersCards;
-        playerMoved += ResetSteps;
         gameStart += ChooseStartingPlayer;
         endTurn += EndTurnPlayer;
     }
