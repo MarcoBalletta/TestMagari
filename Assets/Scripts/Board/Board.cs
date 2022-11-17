@@ -120,39 +120,138 @@ public class Board : MonoBehaviour
     {
         if(PositionableTileConditions(row, column))
         {
-            foreach(var direction in card.CorridorDirections)
+            Debug.Log("positionable");
+            /*foreach(var direction in card.CorridorDirections)
             {
                 if (direction.HasFlag(Directions.north))
                 {
-                    if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && !CheckDirection(row - 1, column, Directions.south)) return;
+                    if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && !CheckDirection(row - 1, column, Directions.south)) 
+                    {
+                        Debug.Log("return north if");
+                        return;
+                    }
                 }
                 else
                 {
-                    if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && CheckDirection(row - 1, column, Directions.south)) return;
+                    if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && CheckDirection(row - 1, column, Directions.south))
+                    {
+                        Debug.Log("return north else");
+                        if(card.CorridorDirections.IndexOf(direction) == card.CorridorDirections.Count - 1) return;
+                    }
                 }
                 if (direction.HasFlag(Directions.south))
                 {
-                    if (row + 1 < gm.GameState.Rows && mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.corridor && !CheckDirection(row + 1, column, Directions.north)) return;
+                    if (row + 1 < gm.GameState.Rows && mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.corridor && !CheckDirection(row + 1, column, Directions.north))
+                    {
+                        Debug.Log("return south if");
+                        return;
+                    }
                 }
                 else
                 {
-                    if (row + 1 < gm.GameState.Rows && mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.corridor && CheckDirection(row + 1, column, Directions.north)) return;
+                    if (row + 1 < gm.GameState.Rows && mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.corridor && CheckDirection(row + 1, column, Directions.north))
+                    {
+                        Debug.Log("return south else");
+                        if (card.CorridorDirections.IndexOf(direction) == card.CorridorDirections.Count - 1) return;
+                        return;
+                    }
                 }
                 if (direction.HasFlag(Directions.east))
                 {
-                    if (column + 1 < gm.GameState.Columns && mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.corridor && !CheckDirection(row, column + 1, Directions.west)) return;
+                    if (column + 1 < gm.GameState.Columns && mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.corridor && !CheckDirection(row, column + 1, Directions.west))
+                    {
+                        Debug.Log("return east if");
+                        return;
+                    }
                 }
                 else
                 {
-                    if (column + 1 < gm.GameState.Columns && mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.corridor && CheckDirection(row, column + 1, Directions.west)) return;
+                    if (column + 1 < gm.GameState.Columns && mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.corridor && CheckDirection(row, column + 1, Directions.west))
+                    {
+                        Debug.Log("return east else");
+                        if (card.CorridorDirections.IndexOf(direction) == card.CorridorDirections.Count - 1) return;
+                    }
                 }
                 if (direction.HasFlag(Directions.west))
                 {
-                    if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && !CheckDirection(row, column - 1, Directions.east)) return;
+                    if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && !CheckDirection(row, column - 1, Directions.east))
+                    {
+                        Debug.Log("return west if");
+                        return;
+                    }
                 }
                 else
                 {
-                    if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && CheckDirection(row, column - 1, Directions.east)) return;
+                    if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && CheckDirection(row, column - 1, Directions.east))
+                    {
+                        Debug.Log("return west else");
+                        if (card.CorridorDirections.IndexOf(direction) == card.CorridorDirections.Count - 1) return;
+                    }
+                }
+            }*/
+
+            if(CheckDirection(card, Directions.north))
+            {
+                if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && !CheckDirection(mapTiles[new Vector2Int(row - 1, column)].Data.CardTile, Directions.south))
+                {
+                    Debug.Log("return north if");
+                    return;
+                }
+            }
+            else
+            {
+                if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && CheckDirection(mapTiles[new Vector2Int(row - 1, column)].Data.CardTile, Directions.south))
+                {
+                    Debug.Log("return north else");
+                    return;
+                }
+            }
+            if(CheckDirection(card, Directions.south))
+            {
+                if (row + 1 < gm.GameState.Rows && mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.corridor && !CheckDirection(mapTiles[new Vector2Int(row + 1, column)].Data.CardTile, Directions.north))
+                {
+                    Debug.Log("return south if");
+                    return;
+                }
+            }
+            else
+            {
+                if (row + 1 < gm.GameState.Rows && mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.corridor && !CheckDirection(mapTiles[new Vector2Int(row + 1, column)].Data.CardTile, Directions.north))
+                {
+                    Debug.Log("return south else");
+                    return;
+                }
+            }
+            if (CheckDirection(card, Directions.east))
+            {
+                if (column + 1 < gm.GameState.Columns && mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.corridor && !CheckDirection(mapTiles[new Vector2Int(row, column + 1)].Data.CardTile, Directions.west))
+                {
+                    Debug.Log("return east if");
+                    return;
+                }
+            }
+            else
+            {
+                if (column + 1 < gm.GameState.Columns && mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.corridor && CheckDirection(mapTiles[new Vector2Int(row, column + 1)].Data.CardTile, Directions.west)) 
+                {
+                    Debug.Log("return east else");
+                    return;
+                }
+            }
+            if(CheckDirection(card, Directions.west))
+            {
+                if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && !CheckDirection(mapTiles[new Vector2Int(row, column - 1)].Data.CardTile, Directions.east))
+                {
+                    Debug.Log("return west if");
+                    return;
+                }
+            }
+            else
+            {
+                if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && CheckDirection(mapTiles[new Vector2Int(row, column - 1)].Data.CardTile, Directions.east))
+                {
+                    Debug.Log("return west else");
+                    return;
                 }
             }
             //can spawn tile
@@ -168,9 +267,9 @@ public class Board : MonoBehaviour
         else return false;
     }
 
-    private bool CheckDirection(int row, int column, Directions direction)
+    private bool CheckDirection(Card cardTile, Directions direction)
     {
-        foreach(var dir in mapTiles[new Vector2Int(row, column)].Data.CardTile.CorridorDirections)
+        foreach(var dir in cardTile.CorridorDirections)
         {
             if (dir.HasFlag(direction)) return true;
         }

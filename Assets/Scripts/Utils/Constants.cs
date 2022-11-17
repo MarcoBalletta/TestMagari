@@ -28,8 +28,8 @@ public static class Constants
     public static float MINIMUM_DISTANCE_FROM_STARTINGTILE = 3f;
     public static int MAXIMUM_CARDS_PLAYABLE = 3;
     public static int MAXIMUM_TOKEN_STEPS = 3;
-    public static int STANDARD_GRID_ROW_SIZE = 10;
-    public static int STANDARD_GRID_COLUMN_SIZE = 10;
+    public static int STANDARD_GRID_ROW_SIZE = 8;
+    public static int STANDARD_GRID_COLUMN_SIZE = 8;
     public static float PERCENTAGE_IF_TRAP = 15f;
     #endregion
     #region Scenes Names
