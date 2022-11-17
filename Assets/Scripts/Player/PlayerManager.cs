@@ -35,8 +35,6 @@ public class PlayerManager : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         playerMoving += CheckIfArrivedAtDestination;
         playerMoving += StartRunning;
-        gm.playerMoved += StopRunning;
-        //gm.playerMoved += CheckNumberOfCards;
     }
 
     private void SpawnStartingEndingTiles()
@@ -106,12 +104,17 @@ public class PlayerManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         StopCoroutine(movementCoroutine);
+        StopRunning();
         movementCoroutine = null;
         actualTile.PlayerOnTile = null;
         actualTile = data;
         data.PlayerOnTile = this;
         if (actualTile == endingTile) gm.StateManager.ChangeState(Constants.STATE_ENDGAME_ID, gm);
-        gm.playerMoved();
+        else if(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn] == this) 
+        {
+            gm.IncreaseSteps();
+            if (!gm.CanMoveAgain() || actualTile.Data.IsTrap) gm.playerMoved();
+        } 
     }
     
     private void StopRunning()

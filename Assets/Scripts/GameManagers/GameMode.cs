@@ -6,6 +6,7 @@ public class GameMode : MonoBehaviour
 {
     private GameState gameState;
     private StateManager stateManager;
+    
     public delegate void PreGameStart();
     public PreGameStart preGame;
     public delegate void PlayerChooseStartingTile();
@@ -42,12 +43,14 @@ public class GameMode : MonoBehaviour
     {
         gameState = GetComponent<GameState>();
         stateManager = GetComponent<StateManager>();
-        GameState.BoardInGame = Instantiate(gameState.BoardRef, Vector3.zero, Quaternion.identity);
-        GameState.BoardInGame.Init(this);
+        var board = Instantiate(gameState.BoardRef, Vector3.zero, Quaternion.identity);
+        gameState.Setup(board);
+        board.Init(this);
         preGame += CreatePlayers;
         playerChooseStartingTile += CheckForOtherPlayersToSelectStartingTile;
         pickCard += IncreaseTurn;
         playerMoved += ControlPlayersCards;
+        playerMoved += ResetSteps;
         gameStart += ChooseStartingPlayer;
         endTurn += EndTurnPlayer;
     }
@@ -126,5 +129,37 @@ public class GameMode : MonoBehaviour
     private void ControlPlayersCards()
     {
         gameState.PlayersInGame[gameState.PlayerTurn].CheckNumberOfCards();
+    }
+
+    private void ResetSteps()
+    {
+        gameState.StepsInTurn = 0;
+    }
+
+    public void IncreaseSteps()
+    {
+        gameState.StepsInTurn++;
+    }
+
+    public bool CanMoveAgain()
+    {
+        if (gameState.StepsInTurn < Constants.MAXIMUM_TOKEN_STEPS) return true;
+        else return false;
+    }
+
+    private void ResetCardsPlayed()
+    {
+        gameState.CardsPlayerdInTurn = 0;
+    }
+
+    public void IncreaseCardsPlayed()
+    {
+        gameState.CardsPlayerdInTurn++;
+    }
+
+    public bool CanPlayCardAgain()
+    {
+        if (gameState.CardsPlayerdInTurn < Constants.MAXIMUM_CARDS_PLAYABLE) return true;
+        else return false;
     }
 }

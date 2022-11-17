@@ -104,7 +104,10 @@ public class Board : MonoBehaviour
     public void ChooseEndingTile(PlayerManager player)
     {
         var tileIndex = new Vector2Int(Random.Range(0, gm.GameState.Rows), Random.Range(0, gm.GameState.Columns));
-        while(mapTiles[tileIndex].Data.Type != TileType.empty || Vector3.Distance(player.StartingTile.transform.position, mapTiles[tileIndex].transform.position) < Constants.MINIMUM_DISTANCE_FROM_STARTINGTILE)
+        var valueToMeasure = 0;
+        if (gm.GameState.Rows > gm.GameState.Columns) valueToMeasure = gm.GameState.Columns;
+        else valueToMeasure = gm.GameState.Rows;
+        while (mapTiles[tileIndex].Data.Type != TileType.empty || Vector3.Distance(player.StartingTile.transform.position, mapTiles[tileIndex].transform.position) < valueToMeasure/2)
         {
             tileIndex = new Vector2Int(Random.Range(0, gm.GameState.Rows), Random.Range(0, gm.GameState.Columns));
         }
@@ -154,7 +157,8 @@ public class Board : MonoBehaviour
             }
             //can spawn tile
             SpawnTileCorridor(row, column, card);
-            gm.StateManager.ChangeState(Constants.STATE_MOVEPLAYERTOKEN_ID, gm);
+            gm.IncreaseCardsPlayed();
+            if(!gm.CanPlayCardAgain())   gm.StateManager.ChangeState(Constants.STATE_MOVEPLAYERTOKEN_ID, gm);
         }
     }
 
