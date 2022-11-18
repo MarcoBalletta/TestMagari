@@ -26,6 +26,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (gm.GameState.PlayersInGame.Count <= 0) return;
         var playerPlaying = gm.GameState.PlayersInGame[gm.GameState.PlayerTurn];
         if (playerPlaying.StartingTile == null && gm.StateManager.Current.Name == Constants.STATE_PLAYERCHOOSING_ID && data.Type == TileType.empty)
         {
@@ -37,13 +38,13 @@ public class Tile : MonoBehaviour
             board.CheckIfTileCanBeSpawned(data.Row, data.Column, playerPlaying.CardSelected);
         }else if (CheckMoveTokenConditions())
         {
-            if(playerOnTile != null)
+            if (playerOnTile != null)
             {
                 var dataTilePlayer = playerPlaying.ActualTile.data;
                 board.MoveToken(playerOnTile, dataTilePlayer);
+                Debug.Log("Movement on: " + gameObject.name);
             }
             board.MoveToken(playerPlaying, data);
-            
         }
     }
 

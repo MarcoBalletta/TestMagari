@@ -84,13 +84,11 @@ public class UIManager : MonoBehaviour
 
     private void ShowSkipButton()
     {
-        Debug.Log("Show");
         skipPhaseButton.gameObject.SetActive(true);
     }    
     
     private void HideSkipButton()
     {
-        Debug.Log("Hide");
         skipPhaseButton.gameObject.SetActive(false);
     }
 }

@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd4d6d8a13fe124fb7eb10959224257, type: 3}
   m_Name: Tile08
   m_EditorClassIdentifier: 
-  corridorDirections: 0600000008000000
+  corridorDirections:
+  - direction: 8
+    playerPosition: {x: 0.25, y: 0.5, z: 0}
+  - direction: 6
+    playerPosition: {x: -0.2, y: 0.5, z: -0.35}
   type: 0
   image: {fileID: 21300000, guid: 3498117fe5d8442459296c39c2393b4e, type: 3}
   cardObjectPrefab: {fileID: 4748219033544944435, guid: d998136efce5dc349a46d4542929684e, type: 3}

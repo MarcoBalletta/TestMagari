@@ -48,6 +48,8 @@ public class PlayerManager : MonoBehaviour
         startingTile.PlayerOnTile = this;
         actualTile = startingTile;
         board.MapTiles[new Vector2Int(startingTile.Data.Row, startingTile.Data.Column)] = startingTile;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().Sleep();
         transform.position = startingTile.transform.position;
 
         //spawn ending tile and adjust data
@@ -57,7 +59,8 @@ public class PlayerManager : MonoBehaviour
         Destroy(endingTile.gameObject);
         endingTile = ending;
         board.MapTiles[new Vector2Int(ending.Data.Row, ending.Data.Column)] = ending;
-        board.BakeArea();
+        
+        //board.BakeArea();
     }
 
     private void ShowModel()
@@ -112,7 +115,6 @@ public class PlayerManager : MonoBehaviour
         if (actualTile == endingTile) gm.StateManager.ChangeState(Constants.STATE_ENDGAME_ID, gm);
         else if(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn] == this) 
         {
-            Debug.Log("turn");
             gm.IncreaseSteps();
             if (!gm.CanMoveAgain() || actualTile.Data.IsTrap) gm.playerMoved();
         } 
@@ -128,7 +130,6 @@ public class PlayerManager : MonoBehaviour
     {
         //if (indexTurn != gm.GameState.PlayerTurn) return;
         var arrayCards = playerCards.Where(card => card != null);
-        Debug.Log("count: " + arrayCards.Count());
         if(arrayCards.Count() > Constants.MAX_NUMBER_OF_CARDS)
         {
             gm.StateManager.ChangeState(Constants.STATE_DISCARDCARD_ID, gm);
@@ -146,4 +147,5 @@ public class PlayerManager : MonoBehaviour
     public Tile ActualTile { get => actualTile; set => actualTile = value; }
     public Card CardSelected { get => cardSelected; set => cardSelected = value; }
     public Directions ComingFromDirection { get => comingFromDirection; set => comingFromDirection = value; }
+    public NavMeshAgent Agent { get => agent; set => agent = value; }
 }

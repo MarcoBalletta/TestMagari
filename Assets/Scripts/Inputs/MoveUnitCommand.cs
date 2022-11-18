@@ -17,6 +17,7 @@ public class MoveUnitCommand : BaseCommand
         column = columnNew;
         player = playerToMove;
         board = boardNew;
+
         switch (comingFromDirection)
         {
             case Directions.north:
@@ -36,7 +37,35 @@ public class MoveUnitCommand : BaseCommand
 
     public override void Execute()
     {
-        player.GetComponent<NavMeshAgent>().destination = board.MapTiles[new Vector2Int(row, column)].transform.position;
+        Vector3 position = Vector3.zero;
+        //player.GetComponent<NavMeshAgent>().destination = board.MapTiles[new Vector2Int(row, column)].transform.position;
+        if (board.MapTiles[new Vector2Int(row, column)].Data.CardTile != null)
+        {
+            Debug.Log("not null");
+            position = board.MapTiles[new Vector2Int(row, column)].transform.position + GiveDestinationFromDirection(player.ComingFromDirection, board.MapTiles[new Vector2Int(row, column)].Data.CardTile);
+            Debug.Log(position);
+        }
+        else 
+        {
+            Debug.Log("null");
+            position = board.MapTiles[new Vector2Int(row, column)].transform.position;
+            Debug.Log(position);
+        }
+        player.Agent.SetDestination(new Vector3(position.x, position.y + 0.5f, position.z));
+        Debug.Log("Player position : " + player.transform.position + "destination: " + player.Agent.destination + "bool " + player.Agent.SetDestination(new Vector3(position.x, position.y + 0.5f, position.z)));
         player.playerMoving(board.MapTiles[new Vector2Int(row, column)]);
+    }
+
+    private Vector3 GiveDestinationFromDirection(Directions direction, Card card)
+    {
+        foreach(var dir in card.CorridorDirections)
+        {
+            if (dir.Direction.HasFlag(direction))
+            {
+                return dir.PlayerPosition;
+            }
+        }
+        Debug.Log("foreach ended, error");
+        return Vector3.zero;
     }
 }

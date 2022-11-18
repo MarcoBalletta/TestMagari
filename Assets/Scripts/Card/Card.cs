@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu ( fileName = "CardData", menuName = "Card/CreateCard", order = 0)]
 public class Card : ScriptableObject
 {
-    [SerializeField] private List<Directions> corridorDirections = new List<Directions>();
+    [SerializeField] private List<RouteData> corridorDirections = new List<RouteData>();
     [SerializeField] private GroundType type;
     [SerializeField] private Sprite image;
     [SerializeField] private Tile cardObjectPrefab;
@@ -14,7 +14,7 @@ public class Card : ScriptableObject
 
     public int NumberInTheDeck { get => numberInTheDeck; set => numberInTheDeck = value; }
     public Sprite Image { get => image; }
-    public List<Directions> CorridorDirections { get => corridorDirections; }
+    public List<RouteData> CorridorDirections { get => corridorDirections; }
     public Tile CardObjectPrefab { get => cardObjectPrefab; }
 }
 
@@ -35,4 +35,13 @@ public enum GroundType
     wall
 }
 
+[System.Serializable]
+public struct RouteData
+{
+    [SerializeField] private Directions direction;
+    [SerializeField]private Vector3 playerPosition;
+
+    public Directions Direction { get => direction; set => direction = value; }
+    public Vector3 PlayerPosition { get => playerPosition; set => playerPosition = value; }
+}
 

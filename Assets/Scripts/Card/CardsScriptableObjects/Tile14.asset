@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd4d6d8a13fe124fb7eb10959224257, type: 3}
   m_Name: Tile14
   m_EditorClassIdentifier: 
-  corridorDirections: 01000000020000000400000008000000
+  corridorDirections:
+  - direction: 1
+    playerPosition: {x: 0, y: 0.5, z: 0.4}
+  - direction: 2
+    playerPosition: {x: 0, y: 0.5, z: -0.45}
+  - direction: 4
+    playerPosition: {x: -0.4, y: 0.5, z: 0}
+  - direction: 8
+    playerPosition: {x: 0.4, y: 0.5, z: 0}
   type: 0
   image: {fileID: 21300000, guid: 6ffc69cb0c7f0a74eb6cc6a0ccfd321d, type: 3}
   cardObjectPrefab: {fileID: 6432398324701207475, guid: b298496569e7eaf4fbf8fbd4901eefa0, type: 3}

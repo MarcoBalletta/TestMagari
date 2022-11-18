@@ -25,6 +25,7 @@ public class Board : MonoBehaviour
         gm.preGame += PopulateDeck;
         gm.gameStart += GiveCardsToPlayers;
         gm.pickCard += PlayerDrawCard;
+        gm.pickCard += BakeArea;
         gm.movePlayerToken += BakeArea;
     }
 
@@ -120,75 +121,6 @@ public class Board : MonoBehaviour
     {
         if(PositionableTileConditions(row, column))
         {
-            Debug.Log("positionable");
-            /*foreach(var direction in card.CorridorDirections)
-            {
-                if (direction.HasFlag(Directions.north))
-                {
-                    if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && !CheckDirection(row - 1, column, Directions.south)) 
-                    {
-                        Debug.Log("return north if");
-                        return;
-                    }
-                }
-                else
-                {
-                    if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && CheckDirection(row - 1, column, Directions.south))
-                    {
-                        Debug.Log("return north else");
-                        if(card.CorridorDirections.IndexOf(direction) == card.CorridorDirections.Count - 1) return;
-                    }
-                }
-                if (direction.HasFlag(Directions.south))
-                {
-                    if (row + 1 < gm.GameState.Rows && mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.corridor && !CheckDirection(row + 1, column, Directions.north))
-                    {
-                        Debug.Log("return south if");
-                        return;
-                    }
-                }
-                else
-                {
-                    if (row + 1 < gm.GameState.Rows && mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.corridor && CheckDirection(row + 1, column, Directions.north))
-                    {
-                        Debug.Log("return south else");
-                        if (card.CorridorDirections.IndexOf(direction) == card.CorridorDirections.Count - 1) return;
-                        return;
-                    }
-                }
-                if (direction.HasFlag(Directions.east))
-                {
-                    if (column + 1 < gm.GameState.Columns && mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.corridor && !CheckDirection(row, column + 1, Directions.west))
-                    {
-                        Debug.Log("return east if");
-                        return;
-                    }
-                }
-                else
-                {
-                    if (column + 1 < gm.GameState.Columns && mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.corridor && CheckDirection(row, column + 1, Directions.west))
-                    {
-                        Debug.Log("return east else");
-                        if (card.CorridorDirections.IndexOf(direction) == card.CorridorDirections.Count - 1) return;
-                    }
-                }
-                if (direction.HasFlag(Directions.west))
-                {
-                    if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && !CheckDirection(row, column - 1, Directions.east))
-                    {
-                        Debug.Log("return west if");
-                        return;
-                    }
-                }
-                else
-                {
-                    if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && CheckDirection(row, column - 1, Directions.east))
-                    {
-                        Debug.Log("return west else");
-                        if (card.CorridorDirections.IndexOf(direction) == card.CorridorDirections.Count - 1) return;
-                    }
-                }
-            }*/
 
             if(CheckDirection(card, Directions.north))
             {
@@ -239,7 +171,7 @@ public class Board : MonoBehaviour
     {
         foreach(var dir in cardTile.CorridorDirections)
         {
-            if (dir.HasFlag(direction)) return true;
+            if (dir.Direction.HasFlag(direction)) return true;
         }
         return false;
     }
@@ -272,13 +204,13 @@ public class Board : MonoBehaviour
 
     public void BakeArea()
     {
+        Debug.Log("Bake");
         navMesh.BuildNavMesh();
     }
 
     public bool CheckTilesConnected(TileData tile1, TileData tile2)
     {
         var direction = GetMovementDirection(tile1, tile2);
-        Debug.Log(direction);
         switch (direction)
         {
             case Directions.north:
@@ -319,13 +251,13 @@ public class Board : MonoBehaviour
         {
             foreach (var direction1FromList in tile1.CardTile.CorridorDirections)
             {
-                if (direction1FromList.HasFlag(dir1) && direction1FromList.HasFlag(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].ComingFromDirection))
+                if (direction1FromList.Direction.HasFlag(dir1) && direction1FromList.Direction.HasFlag(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn].ComingFromDirection))
                 {
                     if (tile2?.CardTile)
                     {
                         foreach (var direction2FromList in tile2.CardTile.CorridorDirections)
                         {
-                            if (direction2FromList.HasFlag(dir2)) return true;
+                            if (direction2FromList.Direction.HasFlag(dir2)) return true;
                         }
                         return false;
                     }
@@ -340,6 +272,7 @@ public class Board : MonoBehaviour
     public void MoveToken(PlayerManager tokenToMove, TileData tileToMoveTo)
     {
         var direction = GetMovementDirection(tokenToMove.ActualTile.Data, tileToMoveTo);
+        Debug.Log(tokenToMove.name + " move to: " + tileToMoveTo.Type + "row "+ tileToMoveTo.Row + " column: " + tileToMoveTo.Column);
         var movement = new MoveUnitCommand(tileToMoveTo.Row, tileToMoveTo.Column, tokenToMove, this, direction);
         movement.Execute();
     }
