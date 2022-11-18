@@ -112,6 +112,7 @@ public class PlayerManager : MonoBehaviour
         if (actualTile == endingTile) gm.StateManager.ChangeState(Constants.STATE_ENDGAME_ID, gm);
         else if(gm.GameState.PlayersInGame[gm.GameState.PlayerTurn] == this) 
         {
+            Debug.Log("turn");
             gm.IncreaseSteps();
             if (!gm.CanMoveAgain() || actualTile.Data.IsTrap) gm.playerMoved();
         } 
@@ -120,6 +121,7 @@ public class PlayerManager : MonoBehaviour
     private void StopRunning()
     {
         anim.SetBool(Constants.ANIM_MOVING_PARAMETER, false);
+        agent.SetDestination(transform.position);
     }
 
     public void CheckNumberOfCards()

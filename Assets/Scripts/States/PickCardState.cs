@@ -11,6 +11,7 @@ public class PickCardState : BaseState
     }
     public override void Enter(GameMode gm)
     {
+        Debug.Log("enter");
         gm.pickCard();
     }
 }

@@ -23,6 +23,8 @@ public class GameMode : MonoBehaviour
     public MovePlayerTokenStart movePlayerToken;
     public delegate void PlayerMoved();
     public PlayerMoved playerMoved;
+    //public delegate void FinishedPlayerMoving();
+    //public FinishedPlayerMoving finishedPlayerMoving;
     public delegate void DiscardCard();
     public DiscardCard discardCard;
     public delegate void EndTurn();
@@ -48,8 +50,8 @@ public class GameMode : MonoBehaviour
         board.Init(this);
         preGame += CreatePlayers;
         playerChooseStartingTile += CheckForOtherPlayersToSelectStartingTile;
-        playerChooseStartingTile += ResetCardsPlayed;
-        playerChooseStartingTile += ResetSteps;
+        pickCard += ResetCardsPlayed;
+        pickCard += ResetSteps;
         pickCard += IncreaseTurn;
         playerMoved += ControlPlayersCards;
         gameStart += ChooseStartingPlayer;

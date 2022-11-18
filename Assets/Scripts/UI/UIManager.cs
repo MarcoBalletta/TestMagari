@@ -16,7 +16,6 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         gameMode.playerChooseStartingTile += ChooseStartingTile;
-        //gameMode.playerChooseStartingTile += HideSkipButton;
         gameMode.pickCard += TellWhichPlayerTurn;
         gameMode.pickCard += ShowSkipButton;
         gameMode.pickCard += ShowCardsPanel;
@@ -27,8 +26,6 @@ public class UIManager : MonoBehaviour
         gameMode.updateUICards += ShowCardsPanel;
         gameMode.discardCard += ShowCardsPanel;
         gameMode.discardCard += DiscardCardStartUI;
-        gameMode.discardCard += HideSkipButton;
-        gameMode.playerMoved += HideSkipButton;
         gameMode.enableMainCamera += ShowCardsPanel;
         gameMode.enableTableCamera += DisableCardsPanel;
     }
@@ -87,11 +84,13 @@ public class UIManager : MonoBehaviour
 
     private void ShowSkipButton()
     {
+        Debug.Log("Show");
         skipPhaseButton.gameObject.SetActive(true);
     }    
     
     private void HideSkipButton()
     {
+        Debug.Log("Hide");
         skipPhaseButton.gameObject.SetActive(false);
     }
 }
