@@ -42,7 +42,6 @@ public class Tile : MonoBehaviour
             {
                 var dataTilePlayer = playerPlaying.ActualTile.data;
                 board.MoveToken(playerOnTile, dataTilePlayer);
-                Debug.Log("Movement on: " + gameObject.name);
             }
             board.MoveToken(playerPlaying, data);
         }

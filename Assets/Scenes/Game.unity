@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.1
+    agentRadius: 0.02
     agentHeight: 1
     agentSlope: 60
     agentClimb: 0.63
@@ -114,7 +114,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0.5
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.033333335
+    cellSize: 0.0066666664
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corridorDirections:
   - direction: 5
-    playerPosition: {x: 0, y: 0.5, z: 0}
+    playerPosition: {x: 0, y: 0.25, z: 0}
   type: 0
   image: {fileID: 21300000, guid: 7fac098a601257143a7a4806da4472a1, type: 3}
   cardObjectPrefab: {fileID: 1818006994036818179, guid: ad457885aa3e92647a49165c11bfbc30, type: 3}

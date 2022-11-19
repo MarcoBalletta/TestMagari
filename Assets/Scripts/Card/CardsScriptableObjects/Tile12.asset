@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corridorDirections:
   - direction: 6
-    playerPosition: {x: -0.3, y: 0.5, z: -0.3}
+    playerPosition: {x: -0.3, y: 0.25, z: -0.3}
   - direction: 9
     playerPosition: {x: 0.3, y: 0.5, z: 0.3}
   type: 0

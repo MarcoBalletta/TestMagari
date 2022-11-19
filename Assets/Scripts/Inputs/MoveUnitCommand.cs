@@ -51,8 +51,8 @@ public class MoveUnitCommand : BaseCommand
             position = board.MapTiles[new Vector2Int(row, column)].transform.position;
             Debug.Log(position);
         }
-        player.Agent.SetDestination(new Vector3(position.x, position.y + 0.5f, position.z));
-        Debug.Log("Player position : " + player.transform.position + "destination: " + player.Agent.destination + "bool " + player.Agent.SetDestination(new Vector3(position.x, position.y + 0.5f, position.z)));
+        bool result = player.Agent.SetDestination(new Vector3(position.x, position.y + 0.25f, position.z));
+        Debug.Log("Player position : " + player.transform.position + "destination: " + player.Agent.destination + "bool " + result);
         player.playerMoving(board.MapTiles[new Vector2Int(row, column)]);
     }
 
