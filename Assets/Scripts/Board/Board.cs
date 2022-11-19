@@ -272,7 +272,6 @@ public class Board : MonoBehaviour
     public void MoveToken(PlayerManager tokenToMove, TileData tileToMoveTo)
     {
         var direction = GetMovementDirection(tokenToMove.ActualTile.Data, tileToMoveTo);
-        Debug.Log(tokenToMove.name + " move to: " + tileToMoveTo.Type + "row "+ tileToMoveTo.Row + " column: " + tileToMoveTo.Column);
         var movement = new MoveUnitCommand(tileToMoveTo.Row, tileToMoveTo.Column, tokenToMove, this, direction);
         movement.Execute();
     }

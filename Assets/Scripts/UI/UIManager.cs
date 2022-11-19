@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameMode gameMode;
     [SerializeField] private GameObject cardsPanel;
+    [SerializeField] private GameObject endGamePanel;
+    [SerializeField] private TextMeshProUGUI endGameWinningPlayer;
     [SerializeField] private CardHandler cardPrefab;
     [SerializeField] private TextMeshProUGUI infoText;
     [SerializeField] private TextMeshProUGUI totalTurnsText;
@@ -26,6 +28,7 @@ public class UIManager : MonoBehaviour
         gameMode.updateUICards += ShowCardsPanel;
         gameMode.discardCard += ShowCardsPanel;
         gameMode.discardCard += DiscardCardStartUI;
+        gameMode.endGame += EndGameUI;
         gameMode.enableMainCamera += ShowCardsPanel;
         gameMode.enableTableCamera += DisableCardsPanel;
     }
@@ -90,5 +93,11 @@ public class UIManager : MonoBehaviour
     private void HideSkipButton()
     {
         skipPhaseButton.gameObject.SetActive(false);
+    }
+
+    private void EndGameUI()
+    {
+        endGameWinningPlayer.text = (gameMode.GameState.PlayerTurn + 1).ToString();
+        endGamePanel.SetActive(true);
     }
 }

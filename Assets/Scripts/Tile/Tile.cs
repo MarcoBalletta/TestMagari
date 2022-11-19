@@ -41,6 +41,7 @@ public class Tile : MonoBehaviour
             if (playerOnTile != null)
             {
                 var dataTilePlayer = playerPlaying.ActualTile.data;
+                Debug.Log("switch");
                 board.MoveToken(playerOnTile, dataTilePlayer);
             }
             board.MoveToken(playerPlaying, data);

@@ -1623,7 +1623,7 @@ GameObject:
   - component: {fileID: 1324876497}
   - component: {fileID: 1324876499}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: TutorialGameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1658,11 +1658,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardRef: {fileID: 3324596631585494547, guid: c587f6d0d6f810943a44e0e654732561, type: 3}
   boardInGame: {fileID: 0}
-  rows: 10
-  columns: 10
+  rows: 1
+  columns: 3
   playersPrefab:
   - {fileID: 2434498713393528442, guid: dac37c962ed8e1b4d9c940c47f9ab212, type: 3}
-  - {fileID: 5020073584042657084, guid: 721cf268e20206e49a292cafe9668889, type: 3}
   playersInGame: []
 --- !u!114 &1324876498
 MonoBehaviour:
@@ -2107,6 +2106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMode: {fileID: 1324876498}
   cardsPanel: {fileID: 409687036}
+  endGamePanel: {fileID: 0}
+  endGameWinningPlayer: {fileID: 0}
   cardPrefab: {fileID: -7081228163165290370, guid: e25fd856ce1247c44bd27ced22998291, type: 3}
   infoText: {fileID: 469622856}
   totalTurnsText: {fileID: 13544050}

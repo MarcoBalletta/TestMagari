@@ -41,14 +41,12 @@ public class MoveUnitCommand : BaseCommand
         //player.GetComponent<NavMeshAgent>().destination = board.MapTiles[new Vector2Int(row, column)].transform.position;
         if (board.MapTiles[new Vector2Int(row, column)].Data.CardTile != null)
         {
-            Debug.Log("not null");
             position = board.MapTiles[new Vector2Int(row, column)].transform.position + GiveDestinationFromDirection(player.ComingFromDirection, board.MapTiles[new Vector2Int(row, column)].Data.CardTile);
             Debug.Log(position);
         }
         else 
         {
-            Debug.Log("null");
-            position = board.MapTiles[new Vector2Int(row, column)].transform.position;
+            position = board.MapTiles[new Vector2Int(row, column)].transform.position + new Vector3(0, 0.25f, 0);
             Debug.Log(position);
         }
         bool result = player.Agent.SetDestination(new Vector3(position.x, position.y + 0.25f, position.z));

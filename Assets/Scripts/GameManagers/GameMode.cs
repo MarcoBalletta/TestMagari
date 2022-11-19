@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameMode : MonoBehaviour
 {
@@ -164,5 +165,15 @@ public class GameMode : MonoBehaviour
     {
         if (gameState.CardsPlayerdInTurn < Constants.MAXIMUM_CARDS_PLAYABLE) return true;
         else return false;
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene(Constants.MENU_SCENE_NAME );
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(Constants.GAME_SCENE_NAME);
     }
 }
