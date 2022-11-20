@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc3ef65764ee2940921c32269389da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 7645140863908629681, guid: 46920a9153cdb5b48b0419858aabfa09, type: 3}
+  tilePrefab: {fileID: 7645140863908629681, guid: 46920a9153cdb5b48b0419858aabfa09,
+    type: 3}
   listOfPossibleCards:
   - {fileID: 11400000, guid: bfa4057812967af448f619cefff5563a, type: 2}
   - {fileID: 11400000, guid: ccc45db238ef2e348a4ae410a8328200, type: 2}
@@ -92,7 +93,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 3895
   m_UseGeometry: 1
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1

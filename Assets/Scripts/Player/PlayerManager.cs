@@ -21,7 +21,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Tile prefabStartingTile;
     [SerializeField] private Tile prefabEndingTile;
     [SerializeField] private GameObject model;
-    [SerializeField] private Animator anim;
+    [SerializeField] private AnimAndVFXHandler animHandler;
     public delegate void PlayerMoving(Tile data);
     public PlayerMoving playerMoving;
 
@@ -39,8 +39,11 @@ public class PlayerManager : MonoBehaviour
 
     private void SpawnStartingEndingTiles()
     {
+        
+        
         //spawn starting tile and adjust data
         var starting = Instantiate(prefabStartingTile, board.transform);
+        //board.BakeArea();
         starting.Setup(gm, startingTile.Data.Row, startingTile.Data.Column, TileType.starting, false);
         starting.transform.position = startingTile.transform.position;
         Destroy(startingTile.gameObject);
@@ -48,9 +51,12 @@ public class PlayerManager : MonoBehaviour
         startingTile.PlayerOnTile = this;
         actualTile = startingTile;
         board.MapTiles[new Vector2Int(startingTile.Data.Row, startingTile.Data.Column)] = startingTile;
+        //Debug.Log("position: " + transform.position + "destination: " + agent.destination);
+        transform.position = startingTile.transform.position + new Vector3(0, 0.25f, 0);
+        //var result = agent.SetDestination(startingTile.transform.position + new Vector3(0, 0.25f, 0));
+        //Debug.Log("New position: " + transform.position + "destination attempting:  " + (startingTile.transform.position + new Vector3(0, 0.25f, 0)) + " destination: " + agent.destination);
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().Sleep();
-        transform.position = startingTile.transform.position;
 
         //spawn ending tile and adjust data
         var ending = Instantiate(prefabEndingTile, board.transform);
@@ -59,8 +65,8 @@ public class PlayerManager : MonoBehaviour
         Destroy(endingTile.gameObject);
         endingTile = ending;
         board.MapTiles[new Vector2Int(ending.Data.Row, ending.Data.Column)] = ending;
-        
-        //board.BakeArea();
+        agent.enabled = true;
+        board.BakeArea();
     }
 
     private void ShowModel()
@@ -89,10 +95,7 @@ public class PlayerManager : MonoBehaviour
         if(gm.StateManager.Current.Name == Constants.STATE_DISCARDCARD_ID)  gm.StateManager.ChangeState(Constants.STATE_ENDTURN_ID, gm);
     }
 
-    private void StartRunning(Tile data)
-    {
-        anim.SetBool(Constants.ANIM_MOVING_PARAMETER, true);
-    }
+
 
     private void CheckIfArrivedAtDestination(Tile data)
     {
@@ -102,12 +105,15 @@ public class PlayerManager : MonoBehaviour
     private IEnumerator ControlIfArrived(Tile data)
     {
         yield return new WaitForSeconds(0.2f);
+        Debug.Log("Check");
         while (movementCoroutine != null && agent.pathPending && Vector3.Distance(transform.position, agent.destination) > agent.stoppingDistance)
         {
+            Debug.Log("Checking");
             yield return new WaitForSeconds(0.1f);
         }
         StopCoroutine(movementCoroutine);
-        StopRunning();
+        animHandler.StopRunning();
+        agent.SetDestination(transform.position);
         movementCoroutine = null;
         actualTile.PlayerOnTile = null;
         actualTile = data;
@@ -120,11 +126,11 @@ public class PlayerManager : MonoBehaviour
         } 
     }
     
-    private void StopRunning()
+    private void StartRunning(Tile data)
     {
-        anim.SetBool(Constants.ANIM_MOVING_PARAMETER, false);
-        agent.SetDestination(transform.position);
+        animHandler.StartRunning();
     }
+
 
     public void CheckNumberOfCards()
     {

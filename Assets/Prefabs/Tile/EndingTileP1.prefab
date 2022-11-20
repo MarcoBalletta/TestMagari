@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 8758103648710196490}
   - component: {fileID: 5078263755304542598}
   - component: {fileID: 7618792252034828925}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EndingTileP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

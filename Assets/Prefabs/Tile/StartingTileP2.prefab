@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 6022917458122661200}
   - component: {fileID: 2815736382950893413}
   - component: {fileID: 8334915443190500630}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: StartingTileP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

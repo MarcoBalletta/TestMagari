@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2244,7 +2244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d8c8f41fa8b7df499ff5508e1acb229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardRef: {fileID: -1923615896987373418, guid: 49da947068b76be42a27777533be7ae0, type: 3}
+  boardRef: {fileID: -1923615896987373418, guid: 49da947068b76be42a27777533be7ae0,
+    type: 3}
   boardInGame: {fileID: 0}
   rows: 1
   columns: 3
@@ -2819,7 +2820,8 @@ MonoBehaviour:
   cardsPanel: {fileID: 409687036}
   endGamePanel: {fileID: 85634107}
   endGameWinningPlayer: {fileID: 1347259111}
-  cardPrefab: {fileID: -7081228163165290370, guid: e25fd856ce1247c44bd27ced22998291, type: 3}
+  cardPrefab: {fileID: -7081228163165290370, guid: e25fd856ce1247c44bd27ced22998291,
+    type: 3}
   infoText: {fileID: 469622856}
   totalTurnsText: {fileID: 13544050}
   skipPhaseButton: {fileID: 394313596}

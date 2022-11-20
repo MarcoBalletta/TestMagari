@@ -52,6 +52,7 @@ public class MoveUnitCommand : BaseCommand
         bool result = player.Agent.SetDestination(new Vector3(position.x, position.y + 0.25f, position.z));
         Debug.Log("Player position : " + player.transform.position + "destination: " + player.Agent.destination + "bool " + result);
         player.playerMoving(board.MapTiles[new Vector2Int(row, column)]);
+        board.BakeArea();
     }
 
     private Vector3 GiveDestinationFromDirection(Directions direction, Card card)
