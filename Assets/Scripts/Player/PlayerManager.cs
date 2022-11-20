@@ -39,8 +39,6 @@ public class PlayerManager : MonoBehaviour
 
     private void SpawnStartingEndingTiles()
     {
-        
-        
         //spawn starting tile and adjust data
         var starting = Instantiate(prefabStartingTile, board.transform);
         //board.BakeArea();
@@ -105,10 +103,8 @@ public class PlayerManager : MonoBehaviour
     private IEnumerator ControlIfArrived(Tile data)
     {
         yield return new WaitForSeconds(0.2f);
-        Debug.Log("Check");
         while (movementCoroutine != null && agent.pathPending && Vector3.Distance(transform.position, agent.destination) > agent.stoppingDistance)
         {
-            Debug.Log("Checking");
             yield return new WaitForSeconds(0.1f);
         }
         StopCoroutine(movementCoroutine);

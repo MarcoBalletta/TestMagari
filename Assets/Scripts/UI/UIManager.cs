@@ -64,14 +64,20 @@ public class UIManager : MonoBehaviour
         }
         if(cards != null)
         {
-            foreach(var card in cards)
+            StartCoroutine(ShowCardsWithTimer(cards));
+        }
+    }
+
+    protected IEnumerator ShowCardsWithTimer(Card[] cards)
+    {
+        foreach (var card in cards)
+        {
+            if (card != null)
             {
-                if(card != null)
-                {
-                    var cardImage = Instantiate(cardPrefab, cardsPanel.transform);
-                    cardImage.Setup(card, gameMode);
-                }
+                var cardImage = Instantiate(cardPrefab, cardsPanel.transform);
+                cardImage.Setup(card, gameMode);
             }
+            yield return new WaitForSeconds(1f);
         }
     }
 

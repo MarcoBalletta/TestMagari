@@ -38,19 +38,18 @@ public class MoveUnitCommand : BaseCommand
     public override void Execute()
     {
         Vector3 position = Vector3.zero;
-        //player.GetComponent<NavMeshAgent>().destination = board.MapTiles[new Vector2Int(row, column)].transform.position;
         if (board.MapTiles[new Vector2Int(row, column)].Data.CardTile != null)
         {
             position = board.MapTiles[new Vector2Int(row, column)].transform.position + GiveDestinationFromDirection(player.ComingFromDirection, board.MapTiles[new Vector2Int(row, column)].Data.CardTile);
-            Debug.Log(position);
+            //Debug.Log(position);
         }
         else 
         {
             position = board.MapTiles[new Vector2Int(row, column)].transform.position + new Vector3(0, 0.25f, 0);
-            Debug.Log(position);
+            //Debug.Log(position);
         }
         bool result = player.Agent.SetDestination(new Vector3(position.x, position.y + 0.25f, position.z));
-        Debug.Log("Player position : " + player.transform.position + "destination: " + player.Agent.destination + "bool " + result);
+        //Debug.Log("Player position : " + player.transform.position + "destination: " + player.Agent.destination + "bool " + result);
         player.playerMoving(board.MapTiles[new Vector2Int(row, column)]);
         board.BakeArea();
     }
@@ -64,7 +63,6 @@ public class MoveUnitCommand : BaseCommand
                 return dir.PlayerPosition;
             }
         }
-        Debug.Log("foreach ended, error");
         return Vector3.zero;
     }
 }

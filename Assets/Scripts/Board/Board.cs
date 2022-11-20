@@ -9,7 +9,9 @@ public class Board : MonoBehaviour
     protected Grid grid;
     protected Dictionary<Vector2Int, Tile> mapTiles = new Dictionary<Vector2Int, Tile>();
     protected NavMeshSurface navMesh;
+    private AudioSource source;
     [SerializeField] protected Tile tilePrefab;
+    [SerializeField] protected AudioClip spawnTileClip;
     [SerializeField] protected List<Card> listOfPossibleCards = new List<Card>();
     [SerializeField] protected List<Card> deckOfCards = new List<Card>();
 
@@ -27,6 +29,7 @@ public class Board : MonoBehaviour
         gm.pickCard += PlayerDrawCard;
         gm.pickCard += BakeArea;
         gm.movePlayerToken += BakeArea;
+        gm.tilePlaced += SpawnTileSound;
     }
 
     protected void CreateGrid()
@@ -194,6 +197,11 @@ public class Board : MonoBehaviour
         if(gm.tilePlaced != null) gm.tilePlaced();
 
         //gm.enableTableCamera();
+    }
+
+    private void SpawnTileSound()
+    {
+        source.PlayOneShot(spawnTileClip);
     }
 
     private bool DecideIfTrap()
