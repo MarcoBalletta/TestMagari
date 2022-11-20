@@ -6,16 +6,16 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameMode gameMode;
-    [SerializeField] private GameObject cardsPanel;
-    [SerializeField] private GameObject endGamePanel;
-    [SerializeField] private TextMeshProUGUI endGameWinningPlayer;
-    [SerializeField] private CardHandler cardPrefab;
-    [SerializeField] private TextMeshProUGUI infoText;
-    [SerializeField] private TextMeshProUGUI totalTurnsText;
-    [SerializeField] private Button skipPhaseButton;
+    [SerializeField] protected GameMode gameMode;
+    [SerializeField] protected GameObject cardsPanel;
+    [SerializeField] protected GameObject endGamePanel;
+    [SerializeField] protected TextMeshProUGUI endGameWinningPlayer;
+    [SerializeField] protected CardHandler cardPrefab;
+    [SerializeField] protected TextMeshProUGUI infoText;
+    [SerializeField] protected TextMeshProUGUI totalTurnsText;
+    [SerializeField] protected Button skipPhaseButton;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         gameMode.playerChooseStartingTile += ChooseStartingTile;
         gameMode.pickCard += TellWhichPlayerTurn;
@@ -33,30 +33,30 @@ public class UIManager : MonoBehaviour
         gameMode.enableTableCamera += DisableCardsPanel;
     }
 
-    private void ChooseStartingTile()
+    protected void ChooseStartingTile()
     {
         if (gameMode.StateManager.Current.Name != Constants.STATE_PLAYERCHOOSING_ID) return;
         infoText.text = Constants.INFO_SELECT_STARTING_POINT + (gameMode.GameState.PlayerTurn +1).ToString();
     }
 
-    private void TellWhichPlayerTurn()
+    protected void TellWhichPlayerTurn()
     {
         infoText.text = Constants.INFO_PLAYER_PICKCARD + (gameMode.GameState.PlayerTurn + 1).ToString();
         totalTurnsText.text = gameMode.GameState.TotalTurns.ToString();
     }
 
-    private void ShowCardsPanel()
+    protected void ShowCardsPanel()
     {
         cardsPanel.SetActive(true);
         ShowCards(gameMode.GameState.PlayersInGame[gameMode.GameState.PlayerTurn].PlayerCards);
     }
 
-    private void DisableCardsPanel()
+    protected void DisableCardsPanel()
     {
         cardsPanel.SetActive(false);
     }
 
-    private void ShowCards(Card[] cards)
+    protected void ShowCards(Card[] cards)
     {
         foreach(var cardToDestroy in cardsPanel.GetComponentsInChildren<CardHandler>())
         {
@@ -75,27 +75,27 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void MoveTokenStartUI()
+    protected void MoveTokenStartUI()
     {
         infoText.text = Constants.INFO_PLAYER_MOVETOKEN + (gameMode.GameState.PlayerTurn + 1).ToString();
     }    
     
-    private void DiscardCardStartUI()
+    protected void DiscardCardStartUI()
     {
         infoText.text = Constants.INFO_DISCARD_CARD + (gameMode.GameState.PlayerTurn + 1).ToString();
     }
 
-    private void ShowSkipButton()
+    protected void ShowSkipButton()
     {
         skipPhaseButton.gameObject.SetActive(true);
     }    
     
-    private void HideSkipButton()
+    protected void HideSkipButton()
     {
         skipPhaseButton.gameObject.SetActive(false);
     }
 
-    private void EndGameUI()
+    protected void EndGameUI()
     {
         endGameWinningPlayer.text = (gameMode.GameState.PlayerTurn + 1).ToString();
         endGamePanel.SetActive(true);

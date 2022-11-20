@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameMode : MonoBehaviour
 {
-    private GameState gameState;
-    private StateManager stateManager;
+    protected GameState gameState;
+    protected StateManager stateManager;
     
     public delegate void PreGameStart();
     public PreGameStart preGame;
@@ -20,12 +20,12 @@ public class GameMode : MonoBehaviour
     public PickedCardStart pickedCard;
     public delegate void UpdateUICards();
     public PickedCardStart updateUICards;
+    public delegate void TilePlaced();
+    public TilePlaced tilePlaced;
     public delegate void MovePlayerTokenStart();
     public MovePlayerTokenStart movePlayerToken;
     public delegate void PlayerMoved();
     public PlayerMoved playerMoved;
-    //public delegate void FinishedPlayerMoving();
-    //public FinishedPlayerMoving finishedPlayerMoving;
     public delegate void DiscardCard();
     public DiscardCard discardCard;
     public delegate void EndTurn();
@@ -42,7 +42,7 @@ public class GameMode : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    public virtual void Awake()
     {
         gameState = GetComponent<GameState>();
         stateManager = GetComponent<StateManager>();
@@ -59,7 +59,7 @@ public class GameMode : MonoBehaviour
         endTurn += EndTurnPlayer;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         stateManager.ChangeState(Constants.STATE_PREGAME_ID, this);
         stateManager.ChangeState(Constants.STATE_PLAYERCHOOSING_ID, this);
@@ -71,7 +71,7 @@ public class GameMode : MonoBehaviour
         stateManager.ChangeState(Constants.STATE_PICKCARD_ID, this);
     }
 
-    private void CreatePlayers()
+    protected void CreatePlayers()
     {
         foreach(var player in gameState.PlayersPrefab)
         {

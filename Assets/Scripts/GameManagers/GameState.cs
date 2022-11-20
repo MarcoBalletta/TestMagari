@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class GameState : MonoBehaviour
 {
-    [SerializeField] private Board boardRef;
-    [SerializeField] private Board boardInGame;
-    [SerializeField] private int rows;
-    [SerializeField] private int columns;
-    [SerializeField] private List<PlayerManager> playersPrefab = new List<PlayerManager>();
-    [SerializeField] private List<PlayerManager> playersInGame = new List<PlayerManager>();
+    [SerializeField] protected Board boardRef;
+    [SerializeField] protected Board boardInGame;
+    [SerializeField] protected int rows;
+    [SerializeField] protected int columns;
+    [SerializeField] protected List<PlayerManager> playersPrefab = new List<PlayerManager>();
+    [SerializeField] protected List<PlayerManager> playersInGame = new List<PlayerManager>();
     private int playerTurn;
     private int totalTurns;
     private int stepsInTurn;
     private int cardsPlayerdInTurn;
 
-    public void Setup(Board board)
+    public virtual void Setup(Board board)
     {
         if (GridDataSelection.rows > 0) rows = GridDataSelection.rows;
         else rows = Constants.STANDARD_GRID_ROW_SIZE;

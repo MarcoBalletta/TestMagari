@@ -5,13 +5,13 @@ using Unity.AI.Navigation;
 
 public class Board : MonoBehaviour
 {
-    private GameMode gm;
-    private Grid grid;
-    private Dictionary<Vector2Int, Tile> mapTiles = new Dictionary<Vector2Int, Tile>();
-    private NavMeshSurface navMesh;
-    [SerializeField] private Tile tilePrefab;
-    [SerializeField] private List<Card> listOfPossibleCards = new List<Card>();
-    [SerializeField] private List<Card> deckOfCards = new List<Card>();
+    protected GameMode gm;
+    protected Grid grid;
+    protected Dictionary<Vector2Int, Tile> mapTiles = new Dictionary<Vector2Int, Tile>();
+    protected NavMeshSurface navMesh;
+    [SerializeField] protected Tile tilePrefab;
+    [SerializeField] protected List<Card> listOfPossibleCards = new List<Card>();
+    [SerializeField] protected List<Card> deckOfCards = new List<Card>();
 
     public List<Card> DeckOfCards { get => deckOfCards; }
     public Dictionary<Vector2Int, Tile> MapTiles { get => mapTiles; set => mapTiles = value; }
@@ -29,7 +29,7 @@ public class Board : MonoBehaviour
         gm.movePlayerToken += BakeArea;
     }
 
-    private void CreateGrid()
+    protected void CreateGrid()
     {
         Vector3 startPosition = new Vector3(gm.GameState.Columns * (grid.cellSize.x + grid.cellGap.x) / 2 , 0, gm.GameState.Rows * (grid.cellSize.z + grid.cellGap.z) / 2);
         float x= startPosition.x;
@@ -49,7 +49,7 @@ public class Board : MonoBehaviour
             y -= 1 * (grid.cellSize.z + grid.cellGap.z);
         }
     }
-    private void PopulateDeck()
+    protected void PopulateDeck()
     {
         deckOfCards.Clear();
         foreach(var card in listOfPossibleCards)
@@ -61,7 +61,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    private void GiveCardsToPlayers()
+    protected virtual void GiveCardsToPlayers()
     {
         foreach(var player in gm.GameState.PlayersInGame)
         {
@@ -75,7 +75,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    private int DrawCard()
+    protected int DrawCard()
     {
         var randomIndex = Random.Range(0, deckOfCards.Count);
         while (deckOfCards[randomIndex] == null)
@@ -85,7 +85,7 @@ public class Board : MonoBehaviour
         return randomIndex;
     }
 
-    private void PlayerDrawCard()
+    protected void PlayerDrawCard()
     {
         var player = gm.GameState.PlayersInGame[gm.GameState.PlayerTurn];
         var firstIndexEmptyCard = 0;
@@ -102,7 +102,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void ChooseEndingTile(PlayerManager player)
+    public virtual void ChooseEndingTile(PlayerManager player)
     {
         var tileIndex = new Vector2Int(Random.Range(0, gm.GameState.Rows), Random.Range(0, gm.GameState.Columns));
         var valueToMeasure = 0;
@@ -121,7 +121,6 @@ public class Board : MonoBehaviour
     {
         if(PositionableTileConditions(row, column))
         {
-
             if(CheckDirection(card, Directions.north))
             {
                 if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && !CheckDirection(mapTiles[new Vector2Int(row - 1, column)].Data.CardTile, Directions.south)) return;
@@ -167,7 +166,7 @@ public class Board : MonoBehaviour
         else return false;
     }
 
-    private bool CheckDirection(Card cardTile, Directions direction)
+    protected bool CheckDirection(Card cardTile, Directions direction)
     {
         foreach(var dir in cardTile.CorridorDirections)
         {
@@ -176,7 +175,7 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    private void SpawnTileCorridor(int row, int column, Card card)
+    protected virtual void SpawnTileCorridor(int row, int column, Card card)
     {
         var corridorTile = Instantiate(card.CardObjectPrefab, transform);
         corridorTile.Setup(gm, row, column, TileType.corridor, DecideIfTrap());
@@ -192,6 +191,8 @@ public class Board : MonoBehaviour
         }
         mapTiles[new Vector2Int(row, column)] = corridorTile;
         corridorTile.transform.position = tilePosition;
+        gm?.tilePlaced();
+
         //gm.enableTableCamera();
     }
 
@@ -204,7 +205,6 @@ public class Board : MonoBehaviour
 
     public void BakeArea()
     {
-        Debug.Log("Bake");
         navMesh.BuildNavMesh();
     }
 
@@ -245,7 +245,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    private bool CheckConnectedTilesGivenDirection(Directions dir1, Directions dir2, TileData tile1, TileData tile2)
+    protected bool CheckConnectedTilesGivenDirection(Directions dir1, Directions dir2, TileData tile1, TileData tile2)
     {
         if (tile1?.CardTile)
         {
