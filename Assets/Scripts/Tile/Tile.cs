@@ -21,7 +21,8 @@ public class Tile : MonoBehaviour
 
     public void SetupCard(Card newCard)
     {
-        data.CardTile = newCard; 
+        data.CardTile = newCard;
+        GetComponent<Animator>().SetTrigger("Spawn");
     }
 
     private void OnMouseDown()

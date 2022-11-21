@@ -16,8 +16,9 @@ MonoBehaviour:
   - direction: 6
     playerPosition: {x: -0.3, y: 0.25, z: -0.3}
   - direction: 9
-    playerPosition: {x: 0.3, y: 0.5, z: 0.3}
+    playerPosition: {x: 0.3, y: 0.25, z: 0.3}
   type: 0
   image: {fileID: 21300000, guid: 51eda690361c9cd46b0d12cb0339dbdf, type: 3}
-  cardObjectPrefab: {fileID: 1718554909068280040, guid: a92cce51ea2b5a646b3ec6f1432ab389, type: 3}
+  cardObjectPrefab: {fileID: 1718554909068280040, guid: a92cce51ea2b5a646b3ec6f1432ab389,
+    type: 3}
   numberInTheDeck: 5

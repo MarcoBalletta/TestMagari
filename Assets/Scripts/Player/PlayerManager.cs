@@ -102,8 +102,9 @@ public class PlayerManager : MonoBehaviour
 
     private IEnumerator ControlIfArrived(Tile data)
     {
+        actualTile.PlayerOnTile = null;
         yield return new WaitForSeconds(0.2f);
-        while (movementCoroutine != null && agent.pathPending && Vector3.Distance(transform.position, agent.destination) > agent.stoppingDistance)
+        while (movementCoroutine != null && Vector3.Distance(transform.position, new Vector3(agent.destination.x, transform.position.y, agent.destination.z)) > agent.stoppingDistance)
         {
             yield return new WaitForSeconds(0.1f);
         }
@@ -111,7 +112,6 @@ public class PlayerManager : MonoBehaviour
         animHandler.StopRunning();
         agent.SetDestination(transform.position);
         movementCoroutine = null;
-        actualTile.PlayerOnTile = null;
         actualTile = data;
         data.PlayerOnTile = this;
         if (actualTile == endingTile) gm.StateManager.ChangeState(Constants.STATE_ENDGAME_ID, gm);

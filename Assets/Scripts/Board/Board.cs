@@ -14,6 +14,7 @@ public class Board : MonoBehaviour
     [SerializeField] protected AudioClip spawnTileClip;
     [SerializeField] protected List<Card> listOfPossibleCards = new List<Card>();
     [SerializeField] protected List<Card> deckOfCards = new List<Card>();
+    [SerializeField] protected int numberOfImpactsOnTileSpawnedSound = 4;
 
     public List<Card> DeckOfCards { get => deckOfCards; }
     public Dictionary<Vector2Int, Tile> MapTiles { get => mapTiles; set => mapTiles = value; }
@@ -30,6 +31,7 @@ public class Board : MonoBehaviour
         gm.pickCard += BakeArea;
         gm.movePlayerToken += BakeArea;
         gm.tilePlaced += SpawnTileSound;
+        source = GetComponent<AudioSource>();
     }
 
     protected void CreateGrid()
@@ -199,9 +201,18 @@ public class Board : MonoBehaviour
         //gm.enableTableCamera();
     }
 
-    private void SpawnTileSound()
+    protected void SpawnTileSound()
     {
-        source.PlayOneShot(spawnTileClip);
+        StartCoroutine(SoundRepeated());
+    }
+
+    protected IEnumerator SoundRepeated()
+    {
+        for(int i = 0; i < numberOfImpactsOnTileSpawnedSound; i++)
+        {
+            source.PlayOneShot(spawnTileClip);
+            yield return new WaitForSeconds(0.4f);
+        }
     }
 
     private bool DecideIfTrap()

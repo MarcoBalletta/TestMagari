@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    protected AudioSource source;
     [SerializeField] protected GameMode gameMode;
     [SerializeField] protected GameObject cardsPanel;
     [SerializeField] protected GameObject endGamePanel;
@@ -14,6 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] protected TextMeshProUGUI infoText;
     [SerializeField] protected TextMeshProUGUI totalTurnsText;
     [SerializeField] protected Button skipPhaseButton;
+    [SerializeField] protected AudioClip newTextSound;
 
     protected virtual void Awake()
     {
@@ -31,18 +33,27 @@ public class UIManager : MonoBehaviour
         gameMode.endGame += EndGameUI;
         gameMode.enableMainCamera += ShowCardsPanel;
         gameMode.enableTableCamera += DisableCardsPanel;
+        source = GetComponent<AudioSource>();
     }
 
     protected void ChooseStartingTile()
     {
         if (gameMode.StateManager.Current.Name != Constants.STATE_PLAYERCHOOSING_ID) return;
-        infoText.text = Constants.INFO_SELECT_STARTING_POINT + (gameMode.GameState.PlayerTurn +1).ToString();
+        ChangeInfoText(Constants.INFO_SELECT_STARTING_POINT + (gameMode.GameState.PlayerTurn + 1).ToString());
+        //infoText.text = Constants.INFO_SELECT_STARTING_POINT + (gameMode.GameState.PlayerTurn +1).ToString();
     }
 
     protected void TellWhichPlayerTurn()
     {
-        infoText.text = Constants.INFO_PLAYER_PICKCARD + (gameMode.GameState.PlayerTurn + 1).ToString();
+        ChangeInfoText(Constants.INFO_PLAYER_PICKCARD + (gameMode.GameState.PlayerTurn + 1).ToString());
+        //infoText.text = Constants.INFO_PLAYER_PICKCARD + (gameMode.GameState.PlayerTurn + 1).ToString();
         totalTurnsText.text = gameMode.GameState.TotalTurns.ToString();
+    }
+
+    protected void ChangeInfoText(string newText)
+    {
+        infoText.text = newText;
+        source.PlayOneShot(newTextSound);
     }
 
     protected void ShowCardsPanel()
@@ -77,18 +88,20 @@ public class UIManager : MonoBehaviour
                 var cardImage = Instantiate(cardPrefab, cardsPanel.transform);
                 cardImage.Setup(card, gameMode);
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.6f);
         }
     }
 
     protected void MoveTokenStartUI()
     {
-        infoText.text = Constants.INFO_PLAYER_MOVETOKEN + (gameMode.GameState.PlayerTurn + 1).ToString();
+        ChangeInfoText(Constants.INFO_PLAYER_MOVETOKEN + (gameMode.GameState.PlayerTurn + 1).ToString());
+        //infoText.text = Constants.INFO_PLAYER_MOVETOKEN + (gameMode.GameState.PlayerTurn + 1).ToString();
     }    
     
     protected void DiscardCardStartUI()
     {
-        infoText.text = Constants.INFO_DISCARD_CARD + (gameMode.GameState.PlayerTurn + 1).ToString();
+        ChangeInfoText(Constants.INFO_DISCARD_CARD + (gameMode.GameState.PlayerTurn + 1).ToString());
+        //infoText.text = Constants.INFO_DISCARD_CARD + (gameMode.GameState.PlayerTurn + 1).ToString();
     }
 
     protected void ShowSkipButton()

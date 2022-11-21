@@ -44,7 +44,8 @@ public class TutorialBoard : Board
         }
         mapTiles[new Vector2Int(row, column)] = corridorTile;
         corridorTile.transform.position = tilePosition;
-        gm?.tilePlaced();
+        if (gm.tilePlaced != null) gm.tilePlaced();
+        BakeArea();
         //gm.enableTableCamera();
     }
 }
