@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] protected TextMeshProUGUI totalTurnsText;
     [SerializeField] protected Button skipPhaseButton;
     [SerializeField] protected AudioClip newTextSound;
+    [SerializeField] protected AudioClip clickSound;
 
     protected virtual void Awake()
     {
@@ -118,5 +119,10 @@ public class UIManager : MonoBehaviour
     {
         endGameWinningPlayer.text = (gameMode.GameState.PlayerTurn + 1).ToString();
         endGamePanel.SetActive(true);
+    }
+
+    public void ReproduceSound()
+    {
+        source.PlayOneShot(clickSound);
     }
 }
