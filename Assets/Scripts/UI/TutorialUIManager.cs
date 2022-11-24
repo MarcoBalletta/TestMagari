@@ -13,7 +13,9 @@ public class TutorialUIManager : UIManager
     {
         base.Awake();
         gameMode.pickCard += ShowInfoPanel;
+        gameMode.pickCard -= ShowSkipButton;
         gameMode.pickedCard += ShowInfoPanel;
+        gameMode.pickedCard += ShowSkipButton;
         gameMode.movePlayerToken += ShowInfoPanel;
         gameMode.playerMoved += ShowInfoPanel;
         gameMode.tilePlaced += ShowInfoPanel;

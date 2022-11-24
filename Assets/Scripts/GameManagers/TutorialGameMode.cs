@@ -22,5 +22,4 @@ public class TutorialGameMode : GameMode
         gameState.PlayersInGame[0].StartingTile = gameState.BoardInGame.MapTiles[new Vector2Int(0, 0)];
         gameState.PlayersInGame[0].EndingTile = gameState.BoardInGame.MapTiles[new Vector2Int(0, 2)];
     }
-
 }

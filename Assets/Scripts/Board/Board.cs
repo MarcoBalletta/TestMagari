@@ -133,6 +133,7 @@ public class Board : MonoBehaviour
             else
             {
                 if (row - 1 >= 0 && mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.corridor && CheckDirection(mapTiles[new Vector2Int(row - 1, column)].Data.CardTile, Directions.south))  return;
+                if (mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.starting || mapTiles[new Vector2Int(row - 1, column)].Data.Type == TileType.ending) return;
             }
             if(CheckDirection(card, Directions.south))
             {
@@ -141,6 +142,7 @@ public class Board : MonoBehaviour
             else
             {
                 if (row + 1 < gm.GameState.Rows && mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.corridor && !CheckDirection(mapTiles[new Vector2Int(row + 1, column)].Data.CardTile, Directions.north))  return;
+                if (mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.starting || mapTiles[new Vector2Int(row + 1, column)].Data.Type == TileType.ending) return;
             }
             if (CheckDirection(card, Directions.east))
             {
@@ -149,6 +151,7 @@ public class Board : MonoBehaviour
             else
             {
                 if (column + 1 < gm.GameState.Columns && mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.corridor && CheckDirection(mapTiles[new Vector2Int(row, column + 1)].Data.CardTile, Directions.west))  return;
+                if (mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.starting || mapTiles[new Vector2Int(row, column + 1)].Data.Type == TileType.ending) return;
             }
             if(CheckDirection(card, Directions.west))
             {
@@ -157,6 +160,7 @@ public class Board : MonoBehaviour
             else
             {
                 if (column - 1 >= 0 && mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.corridor && CheckDirection(mapTiles[new Vector2Int(row, column - 1)].Data.CardTile, Directions.east))    return;
+                if (mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.starting || mapTiles[new Vector2Int(row, column - 1)].Data.Type == TileType.ending) return;
             }
             //can spawn tile
             SpawnTileCorridor(row, column, card);

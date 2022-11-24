@@ -119,7 +119,7 @@ public class GameMode : MonoBehaviour
         }
     }
 
-    public void SkipPhase()
+    public virtual void SkipPhase()
     {
         if(stateManager.Current.Name == Constants.STATE_PICKCARD_ID)
         {
