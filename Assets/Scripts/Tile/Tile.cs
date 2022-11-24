@@ -25,7 +25,7 @@ public class Tile : MonoBehaviour
         GetComponent<Animator>().SetTrigger("Spawn");
     }
 
-    private void OnMouseDown()
+    public void ClickedOnTile()
     {
         if (gm.GameState.PlayersInGame.Count <= 0) return;
         var playerPlaying = gm.GameState.PlayersInGame[gm.GameState.PlayerTurn];
